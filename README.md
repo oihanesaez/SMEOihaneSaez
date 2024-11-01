@@ -12,5 +12,5 @@ Para instalar el paquete desde GitHub:
 install.packages("devtools")
 
 # Instala el paquete desde GitHub
-devtools::install_github("oihanesaez/SMEOihaneSaez/SMEOihaneSaez_R")
+devtools::install_github("oihanesaez/SMEOihaneSaez/SMEOihaneSaez")
 ```
