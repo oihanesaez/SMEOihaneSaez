@@ -1,0 +1,18 @@
+Package: SMEOihaneSaez
+Type: Package
+Title: Paquete para la gestion y analisis de datos
+Version: 0.1.0
+Author: Oihane Saez Murgiondo
+Maintainer: Oihane Saez <osaez004@ikasle.ehu.eus>
+Suggests:
+  rmarkdown,
+  knitr
+Description: Este paquete contiene funciones basicas para el analisis de datos como pueden ser el calculo de la correlacion, covarianza, estandarizacion, normalizacion y discretizacion de las variables.
+License: GPL (>=2)
+Encoding: UTF-8
+BuildVignettes: TRUE
+VignetteBuilder:
+  knitr,
+  rmarkdown
+LazyData: true
+RoxygenNote: 7.3.2

@@ -1,0 +1,1212 @@
+---
+title: "Documentación de todas las funciones del paquete"
+author: "Oihane Saez Murgiondo"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Documentación de todas las funciones del paquete}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+#Introducción
+En esta vignette explicaré todas las funciones que he implementado para la asignatura de Software Matemático y Estadístco las cuales están integradas en el paquete "SMEOihaneSaez" y daré algún ejemplo de su uso en cada caso.
+
+Las funciones que se han implementado son funciones básicas que sirven para el análisis y gestión de datos. Tenemos distintas funciones y a modo de resumen algunas de ellas son las siguentes: funciones para la discretización, normalización, estandarización y para calcular métricas distintas como la correlación y la entropía.
+
+#Funciones
+
+##Discretización Equal Width
+
+Para empezar, he implementado distintas funciones de discretización para variables numéricas.
+
+Por un lado, tenemos la función de Discretización  Equal Width la cual discretiza un vector numérico en intervalos de igual anchura. Lo que significa que la función toma un vector numérico y un valor numérico para indicar en cuántos intervalos se debe discretizar el vector. Esta función crea los intervalos de manera que todos los intervalos tengan la misma anchura.
+
+Esta es mi función:
+
+```{r}
+discretizeEW <- function(x, num.bins) {
+  # Encontrar el valor mínimo y máximo de x
+  num_max <- max(x)
+  num_min <- min(x)
+
+  # Calcular el tamaño del intervalo
+  length_lim <- (num_max - num_min) / num.bins
+
+  # Crear los puntos de corte
+  puntos_de_corte <- num_min + (1:(num.bins - 1)) * length_lim
+
+  # Inicializar el vector categórico
+  vector_categ <- character(length(x))
+
+  # Asignar categorías
+  for (i in 1:length(x)) {
+    if (x[i] <= min(puntos_de_corte)) {
+      vector_categ[i] <- paste0("I(-infty,", min(puntos_de_corte), "]")
+    } else if (x[i] >= max(puntos_de_corte)) {
+      vector_categ[i] <- paste0("I[",max(puntos_de_corte), ", +infty)")
+    } else {
+      # Aquí se ajusta el bucle para incluir el punto de corte
+      for (j in 2:(num.bins - 1)) {
+        if (x[i] <= puntos_de_corte[j]) {
+          vector_categ[i] <- paste0("I(", round(puntos_de_corte[j - 1], 2), ",", round(puntos_de_corte[j], 2), "]")
+          break
+        }
+      }
+    }
+  }
+
+  # Devuelve el vector categorico
+  vector_categ<- as.factor(vector_categ)
+  return(vector_categ)
+}
+```
+
+
+Un ejemplo de su uso es la siguiente:
+
+```{r}
+a <- c(100, 50, 60, 10, 80, 20)
+discretizeEW(a, 4)
+```
+Como vemos, la función nos devuelve un vector de clase factor en este caso con 4 niveles (levels) ya que le hemos indicado que queremos discretizar en 4 intervalos. Por otro lado, vemos que a cada elemento numérico del vector se le ha asignado su correspondiente intervalo.
+
+Esta función sólo nos vale para vectores pero, si tenemos un data set completo, nos interesa que se puedan discretizar todas las variables del data set. Para eso he creado una segunda función para que dado un data frame numérico, la función nos devuelva un data frame de tipo factor indicando en cada caso a qué intervalo corresponde ese valor y a la vez nos muestra todos los intervalos posibles para cada columna del data frame (para cada variable).
+
+La función es la siguiente:
+```{r}
+discretizeEW_df <- function(x, num.bins) {
+  df_dis<- as.data.frame(apply(x, num.bins, MARGIN=2, FUN=discretizeEW))
+  return(df_dis)
+}
+```
+
+
+Un ejemplo de su uso es la siguiente:
+```{r}
+data <- data.frame(Variable1 = c(2.5, 3.6, 5.1, 8.4, 9.7, 2.3, 7.5, 6.2),
+Variable2 = c(15.2, 18.4, 20.1, 14.5, 12.3, 17.6, 21.8, 19.2))
+discretizeEW_df(data, num.bins = 3)
+```
+
+
+##Discretización Equal Frecuency
+Una segunda función de discretización es la Discretización Equal Frecuency. Esta función toma un vector numérico y lo discretiza en intervalos con el mismo número de elementos en cada intervalo. Es decir, si yo tengo un vector numérico de 6 elementos y quiero discretizarlo en 3 intervalos esta función creará los intervalos de tal forma que en cada intervalo queden 2 elementos del vector numérico.
+
+Mi función que implementa esto es la siguiente:
+```{r}
+discretizeEF <- function(x, num.bins) {
+
+  #calcular el número de valores en cada intervalo
+  num_val<- ceiling(length(x)/num.bins) #ceiling() para redondear el número al valor más grande
+  x_orden <- sort(x) #ordeno los valores de menor a mayor
+
+  # Inicializar el vector categórico
+  vector_categ <- character(length(x))
+
+  # Conseguir puntos de corte
+  puntos_de_corte <- c()
+  for (i in seq(num_val, length(x), by = num_val)) {
+    if (length(puntos_de_corte)==num.bins-1){
+      break
+    }
+    else {
+      puntos_de_corte <- c(puntos_de_corte, x_orden[i])
+    }
+  }
+  # Asignar categorías
+  for (i in 1:length(x)) {
+    if (x[i] <= min(puntos_de_corte)) {
+      vector_categ[i] <- paste0("I(-infty,", min(puntos_de_corte), "]")
+    } else if (x[i] > max(puntos_de_corte)) {
+      vector_categ[i] <- paste0("I[",max(puntos_de_corte), ", +infty)")
+    } else {
+      # Aquí se ajusta el bucle para incluir el punto de corte
+      for (j in 2:(num.bins - 1)) {
+        if (x[i] <= puntos_de_corte[j]) {
+          vector_categ[i] <- paste0("I(", round(puntos_de_corte[j - 1], 2), ",", round(puntos_de_corte[j], 2), "]")
+          break
+        }
+      }
+    }
+  }
+
+  # Devuelve vector categorico
+  vector_categ<- as.factor(vector_categ)
+  return(vector_categ)
+}
+```
+
+
+Usando el mismo ejemplo que antes:
+```{r}
+a <- c(100, 50, 60, 10, 80, 20)
+discretizeEF(a, 3)
+```
+
+Vemos que tenemos un vector numérico de 6 elementos y nos ha devuelto un vector de clase factor con tres niveles (ya que le hemos indicado que queremos discretizarlo en 3 intervalos) y en cada intervalo tenemos 2 elementos como hemos explicado anteriormente.
+
+Igual que pasaba con la Discretización Equal Width esta función sólo nos vale para vectores pero, si tenemos un data set completo, nos interesa que se puedan discretizar todas las variables del data set. Para eso he creado una segunda función para que dado un data frame numérico, la función nos devuelva un data frame de tipo factor indicando en cada caso a qué intervalo corresponde ese valor y a la vez nos muestra todos los intervalos posibles para cada columna del data frame (para cada variable).
+
+Este sería la función para el data frame completo:
+```{r}
+discretizeEF_df <- function(x, num.bins) {
+  df_dis<- as.data.frame(apply(x, num.bins, MARGIN=2, FUN=discretizeEF))
+  return(df_dis)
+}
+```
+
+Y este el ejemplo de uso:
+```{r}
+data <- data.frame(Variable1 = c(2.5, 3.6, 5.1, 8.4, 9.7, 2.3, 7.5, 6.2),
+Variable2 = c(15.2, 18.4, 20.1, 14.5, 12.3, 17.6, 21.8, 19.2))
+discretizeEF_df(data, num.bins = 3)
+```
+
+
+##Discretización dado los puntos de corte
+Para terminar con la discretización tenemos una última función que dado un vector numérico y una lista de puntos de corte, la función discretiza ese vector en los intervalos creados con los puntos de corte proporcionados.
+
+Esta es mi función:
+```{r}
+discretize <- function(x, cut.points) {
+  puntos_de_corte <- as.numeric(unlist(cut.points))
+
+  # Inicializar el vector categórico
+  vector_categ <- character(length(x))
+
+  # Asignar categorías
+  for (i in 1:length(x)) {
+    if (x[i] <= min(puntos_de_corte)) {
+      vector_categ[i] <- paste0("I(-infty,", min(puntos_de_corte), "]")
+    } else if (x[i] >= max(puntos_de_corte)) {
+      vector_categ[i] <- paste0("I[",max(puntos_de_corte), ", +infty)")
+    } else {
+      # Aquí se ajusta el bucle para incluir el punto de corte
+      for (j in 2:length(puntos_de_corte)) {
+        if (x[i] <= puntos_de_corte[j]) {
+          vector_categ[i] <- paste0("I(", round(puntos_de_corte[j - 1], 2), ",", round(puntos_de_corte[j], 2), "]")
+          break
+        }
+      }
+    }
+  }
+
+  vector_categ<- as.factor(vector_categ)
+  return(vector_categ)
+
+}
+```
+
+
+Y este un ejemplo de uso:
+```{r}
+a <- c(100, 50, 60, 10, 80, 20)
+puntoscorte<- list(32.5, 55.0, 77.5)
+discretize(a, puntoscorte)
+```
+
+Como vemos, nos ha devuelto un vector de clase factor después de asignar su correspondiente intervalo a cada elemento y como se puede apreciar los niveles o intervalos que ha creado la función coinciden con los puntos de corte que le hemos proporcionado.
+
+##Estandarización
+La estandarización es un proceso estadístico que transforma los datos para que tengan una media de cero y una desviación estándar de uno. Esto es especialmente útil en el análisis de datos, ya que permite que diferentes variables con diferentes escalas o unidades sean comparables.
+
+Se calcula de la siguiente manera:
+
+$$
+z_i=\frac{x_i-\mu}{\sigma}
+$$
+donde
+- $z$ es el valor estandarizado,
+- $x$ es el valor original,
+- $\mu$ es la media del dataset, y
+- $\sigma$ es la desviación estandar.
+
+Por lo tanto mi función para estandarizar un vector numérico es la siguiente:
+```{r}
+estandar <- function(v) {
+  if (!is.numeric(v)) {
+    stop("Error: El vector no es numérico.")
+  }
+
+  v_est <- (v-mean(v))/sd(v)
+  return(v_est)
+}
+```
+
+
+Y un ejemplo de su uso:
+```{r}
+vector <- c(10, 20, 30, 40, 50)
+estandar(vector)
+```
+Como vemos me devuelve un vector numérico con los valores estandarizados.
+
+En el análisis de datos nos interesa poder estandarizar todo el dataset por lo que también he creado una función que me permite estandarizar todas las variables (columnas) de un data frame numérico.
+
+```{r}
+estandar_df <- function(df) {
+  df_estandar <- as.data.frame(apply(df, MARGIN=2, FUN=estandar))
+  return(df_estandar)
+}
+```
+
+
+Ejemplo de su uso:
+```{r}
+df <- data.frame(columna1 = c(10, 20, 30, 40, 50),
+columna2 = c(5, 15, 25, 35, 45),
+columna3 = c(2, 4, 6, 8, 10))
+estandar_df(df)
+```
+
+Como vemos, me devuelve un data frame de clase numérico con todos los valores estandarizados.
+
+##Normalización
+La normalización es una técnica de preprocesamiento de datos que se usa para escalar los valores de una variable numérica de un dataset a un rango específico, generalmente entre 0 y 1. Esto ayuda a que los valores de una variable no dominen a otras cuando se realizan análisis que involucran múltiples variables, como en algoritmos de machine learning o análisis de datos.
+
+Se calcula de la siguiente manera:
+$$
+x_i'=\frac{x_i-\min(X)}{\max(X)-\min(X)}
+$$
+donde
+$x_i'$ es el valor normalizado,
+$x_i$ es el valor original
+$\min(X)$ es el mínimo de la variable $X$ en el conjunto de dataset, y
+$\max(X)$ es el máximo de la variable $X$ en el conjunto de dataset.
+
+Por lo tanto mi función es la siguiente para vectores numéricos:
+```{r}
+norm <- function(v) {
+  if (!is.numeric(v)) {
+    stop("Error: El vector no es numérico.")
+  }
+  v_norm <- (v-min(v))/(max(v)-min(v))
+  return(v_norm)
+}
+```
+
+
+Y el ejemplo de uso:
+```{r}
+vector <- c(10, 20, 30, 40, 50)
+norm(vector)
+```
+
+Como vemos nos devuelve un vector numérico con los valores normalizados.
+
+En el análisis de datos nos interesa poder normalizar todo el dataset por lo que también he creado una función que me permite normalizar todas las variables (columnas) de un data frame numérico.
+
+Esta es la función:
+```{r}
+norm_df <- function(df) {
+  df_norm <- as.data.frame(apply(df, MARGIN=2, FUN=norm))
+  return(df_norm)
+}
+```
+
+
+Y este el ejemplo de uso:
+```{r}
+df <- data.frame(columna1 = c(10, 20, 30, 40, 50),
+columna2 = c(5, 15, 25, 35, 45),
+columna3 = c(2, 4, 6, 8, 10))
+norm_df(df)
+```
+Como vemos me devuelve un data frame numérico con los valores normalizados.
+
+##Varianza
+La varianza es una medida estadística que indica cuánto se dispersan los valores de un conjunto de datos respecto a su media. En otras palabras, mide el grado de variabilidad de los datos, mostrando cuánto se desvían, en promedio, los datos individuales respecto al valor promedio del conjunto.
+
+La varianza ayuda a entender la dispersión de los datos. Un valor de varianza alto indica que los datos están muy dispersos respecto a la media, mientras que un valor bajo indica que los datos están más concentrados alrededor de la media.
+
+Se calcula de la siguiente manera:
+$$
+s^2=\frac{1}{n-1}\sum_{i=1}^{n} (x_i-\bar x)^2
+$$
+donde
+$s^2$ es la varianza,
+$x_i$ es el valor original,
+$\bar x$ es la media de la muestra, y
+$n$ es el tamaño de la muestra.
+
+Por lo que mi función es:
+```{r}
+var_vector <- function(x) {
+  if (!is.numeric(x)) {
+    stop("Error: El vector no es numérico.")
+  }
+
+  #calcular la media
+  media <- mean(x)
+
+  #restar la media con cada elemento
+  ken_media <- x-media
+
+  #calcular la varianza
+  varianza <- sum(ken_media^2)/(length(x)-1)
+
+  return(varianza)
+}
+```
+
+
+Y el ejemplo de uso:
+```{r}
+vector <- c(10, 20, 30, 40, 50)
+var_vector(vector)
+```
+
+Y como vemos nos devuelvo un valor numérico que indica la varianza de esa variable numérica.
+
+En el análisis de datos nos interesa poder calcular la varianza de todo el dataset por lo que también he creado una función que me permite calcular la varianza de todas las variables (columnas) de un data frame numérico.
+
+Esta sería la función:
+```{r}
+var <- function(x){ #x es una matriz/df
+  for (i in 1:ncol(x)) {
+    if (!is.numeric(x[,i])) {
+      stop("Error: La matriz no es numérica.")
+    }
+  }
+  
+  nrow<- nrow(x)
+  ncol <- ncol(x)
+
+  #calcular la media de cada columna (nos devuelve un vector)
+  mean_col <- apply(x, MARGIN=2, FUN=mean) #nos devuelve vector de medias de cada columna
+
+  #restar la media de cada columna a cada elemento de esa columna
+  ken_media <- sweep(x, MARGIN=2, mean_col, FUN="-")
+
+  #calcular la varianza
+  var <- colSums(ken_media^2)/(nrow-1)
+
+  return(var)
+}
+```
+
+
+Y este el ejemplo de uso:
+```{r}
+df <- data.frame(columna1 = c(10, 20, 30, 40, 50),
+columna2 = c(5, 15, 25, 35, 45),
+columna3 = c(2, 4, 6, 8, 10))
+var(df)
+```
+
+Como vemos nos devuelve un vector numérico con la varianza de cada una de las columnas (variables) del data frame.
+
+##Covarianza
+
+La covarianza es una medida estadística que indica la relación y el grado de cambio conjunto entre dos variables aleatorias. En términos simples, nos dice cómo se mueven juntas dos variables: si tienden a aumentar o disminuir juntas, o si una aumenta mientras la otra disminuye. Lo que viene a decir que es la medida de dependencia lineal entre dos variables cuantitativas. Si tenemos dos variable $\textbf{x}$ e $\textbf{y}$ la covarianza entre estas dos variables se calcularía de la siguiente manera:
+
+$$
+s_{xy}=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar x)(y_i-\bar y)
+$$
+donde
+$s_{xy}$ es la covarianza entre $x$ e $y$,
+$x_i$ es uno de los valores originales de la variable $X$,
+$\bar x$ es la media de la muestra de la variable $X$,
+$y_i$ es uno de los valores originales de la variable $Y$,
+$\bar y$ es la media de la muestra de la variable $Y$.
+
+Si la covarianza es mayor que cero, indica que ambas variables tienden a moverse en la misma dirección. Es decir, cuando una variable aumenta, la otra también tiende a aumentar, y lo mismo ocurre si disminuyen.
+
+Si la covarianza es menor que cero, significa que las variables tienden a moverse en direcciones opuestas. Cuando una variable aumenta, la otra tiende a disminuir.
+
+Si la covarianza es cero o cercana a cero, indica que no hay una relación lineal clara entre las dos variables.
+
+Para calcular la covarianza he creado una función que toma un data frame de clase numérico y calcula la covarianza entre las columnas (variables) del data frame. Lo que nos devuelve es una matriz de varianza-covarianza. Las varianzas en la diagonal de la matriz y las covarianzas en el resto de la matriz. Por ejemplo, el elemento $s_{12}$ de la matriz será la covarianza entre las variables 1 y 2.
+
+Esta es la función que he creado para ello:
+```{r}
+cov_fun <- function(x) { #nos devuelve una matriz de varianza-covarianza
+  n_col <- ncol(x)
+  n_row<- nrow(x)
+
+  #calcular la media de cada columna (nos devuelve un vector)
+  mean_col <- apply(x, MARGIN=2, FUN=mean) #nos devuelve vector de medias de cada columna
+
+  #restar la media de cada columna a cada elemento de esa columna
+  ken_media <- sweep(x, MARGIN=2, mean_col, FUN="-")
+
+  matriz_covarianzas <- matrix(0, nrow = n_col, ncol = n_col)  # Inicializar matriz
+
+  for (i in 1:n_col) {
+    for (j in 1:n_col) {
+      matriz_covarianzas[i, j] <- sum(ken_media[,i]*ken_media[,j])/(n_row-1) #calcular la covarianza
+    }
+  }
+  return(matriz_covarianzas)
+}
+```
+
+
+Y el ejemplo de uso sería este:
+```{r}
+df <- data.frame(var1 = c(10, 20, 30, 40, 50),
+var2 = c(5, 15, 25, 35, 45),
+var3 = c(2, 4, 6, 8, 10))
+cov_fun(df)
+```
+
+
+##Correlación
+
+Otra medida estadística es la correlación la cual indica la relación y el grado de asociación lineal entre dos variables. A diferencia de la covarianza, la correlación está normalizada, lo que permite comparar relaciones de variables que pueden tener diferentes escalas o unidades.
+
+Se calcula de la siguiente manera:
+$$
+r_{xy}=\frac{s_{xy}}{\sigma_x \sigma_y}
+$$
+donde
+$r_{xy}$ es la correlación entre las variables $x$ e $y$,
+$s_{xy}$ es la covarianza entre las variables $x$ e $y$,
+$\sigma_x$ es la desviación estandar de la variable $x$,
+$\sigma_y$ es la desviación estandar de la variable $y$
+
+Esta función utiliza internamente la función de la covarianza para calcular la matriz de varianzas-covarianzas por lo que tenemos toda la información necesaria para calcular la correlación en esa matriz ya que la desviación estandar de una variable y la varianza se relacionan de la siguiente manera:
+
+$$
+\sigma_x =\sqrt{s_x^2}
+$$
+donde 
+$\sigma_x$ es la desviación estandar de la variable $x$ y
+$s_x^2$ es la varianza de la variable $x$
+
+Por lo tanto utilizamos la matriz de varianzas-covarianzas y extraemos las varianzas y covarianzas para calcular en cada caso la correlación.
+
+La función que he creado toma un data frame de clase numérico para hacer el cálculo y es la siguiente:
+```{r}
+cor_fun <- function(matriz_dat) {
+  n <- ncol(matriz_dat)  # Número de variables
+  matriz_cov <- cov_fun(matriz_dat)
+  matriz_correlaciones <- matrix(0, nrow = n, ncol = n)  # Inicializar matriz de correlaciones
+
+  for (i in 1:n) {
+    for (j in 1:n) {
+      # Extraer la covarianza y las varianzas
+      cov_xy <- matriz_cov[i, j]                   # Cov(X, Y)
+      var_x <- matriz_cov[i, i]                    # Var(X)
+      var_y <- matriz_cov[j, j]                    # Var(Y)
+
+      # Calcular la correlación
+      matriz_correlaciones[i, j] <- cov_xy / sqrt(var_x * var_y)
+    }
+  }
+
+  return(matriz_correlaciones)
+}
+```
+
+
+Y el ejemplo de uso:
+```{r}
+df <- data.frame(var1 = c(10, 20, 30, 40, 50),
+var2 = c(5, 15, 24, 35, 45),
+var3 = c(2, 4, 6, 8, 9))
+cor_fun(df)
+```
+
+
+La función nos devuelve una matriz de correlaciones de clase numérica.
+
+Si la correlación es mayor que 0, significa que ambas variables tienden a moverse en la misma dirección.
+Si la correlación es menor que 0, indica que las variables tienden a moverse en direcciones opuestas.
+Si la correlación está cerca del 0 significa que no hay una relación lineal clara entre las variables.
+Y finalemente si la correlación es -1 o +1 indica una relación lineal perfecta. Si la correlación es +1, ambas variables aumentan o disminuyen en proporción exacta. Si es -1, una variable aumenta mientras la otra disminuye en proporción exacta.
+
+Como vemos en el ejemplo, las correlaciones en la diagonal son +1 porque en la diagonal tenemos las correlaciones de una variable consigo misma y es por eso que la correlación es perfecta.
+
+##Entropía
+La entropía es una medida de la incertidumbre o desorden en un sistema o conjunto de datos. En estadística y teoría de la información, mide la cantidad de información o incertidumbre presente en un conjunto de posibles resultados.
+
+Se calcula de la siguiente manera:
+
+$$
+H(X)=\sum_{i=1}^{n}-p_ilog_2(p_i)
+$$
+donde 
+$H(X)$ es la entropía de la variable $X$,
+$p_i$ es la probabilidad estimada para cada valor posible en esa variable.
+
+Esta medida se utiliza con variables categóricas por lo que la función que he creado toma un vector de clase factor y nos devuelve un valor numérico que representa la entropía de esa variable.
+
+Esta es la función:
+```{r}
+entropy <- function(x) { # x es un factor
+  niveles <- levels(x)
+  p <- c() #vector de probabilidades
+  for (i in 1:length(niveles)) {
+    counter <- 0
+    for (j in 1:length(x)) {
+      if (niveles[i]==x[j]) {
+        counter <- counter +1
+      }
+    }
+    p <- c(p, counter/length(x))
+  }
+
+  H<- 0
+  for (i in 1:length(p)) {
+    H <- H -p[i]*log2(p[i]+1e-10)
+  }
+  return(H)
+}
+```
+
+
+Y este su implementación:
+```{r}
+data_factor <- factor(c("A", "B", "A", "C", "B", "A", "D", "D", "C", "A"))
+entropy(data_factor)
+```
+
+Si la entropía es alta indica alta incertidumbre y desorden, es decir, un sistema en el que los resultados son muy variados y es difícil predecir qué ocurrirá. Por lo contrario, si la entropía es baja indica que el sistema es más predecible y tiene menos incertidumbre.
+
+En el análisis de datos nos interesa poder calcular la entropía de todo el dataset por lo que también he creado una función que me permite calcular la entropía de todas las variables (columnas) de un data frame de clase factor.
+
+```{r}
+entropy_df <- function(x) { #x es un data frame
+  v_entropy <- sapply(x, FUN=entropy)
+  return(v_entropy)
+}
+```
+
+
+Y el ejemplo:
+```{r}
+data_frame <- data.frame(Color = factor(c("Rojo", "Verde", "Azul", "Rojo", "Verde", "Verde")),
+Forma = factor(c("Círculo", "Cuadrado", "Círculo", "Cuadrado", "Cuadrado", "Círculo")),
+Tamaño = factor(c("Grande", "Pequeño", "Pequeño", "Grande", "Grande", "Pequeño")))
+entropy_df(data_frame)
+```
+
+Nos devuelve, en este caso, un vector numérico con el valor de la entropía de cada variable.
+
+De la misma manera, podría ser útil poder calcular la entropía normalizada ya que  es una versión de la entropía que se ajusta para que su valor esté dentro de un rango estándar, típicamente entre 0 y 1. Esto es especialmente útil para comparar la incertidumbre relativa entre diferentes conjuntos de datos o sistemas con distintas distribuciones de probabilidad, ya que la entropía sin normalizar puede variar ampliamente según el número de posibles resultados y sus probabilidades.
+
+La entropía normalizada se calcula de la siguiente manera:
+
+$$
+H_{norm}=\frac{H(X)}{H_{max}}=\frac{H(X)}{log_2(n)}
+$$
+donde
+$H_{norm}$ es la entropía normalizada,
+$H(X)$ es la entropía de la variable $X$ y
+$n$ es el número total de resultados posibles.
+
+Por lo tanto, la función que he creado toma un vector de clase factor y devuelve un valor numérico que representa la entropía normalizada de esa variable.
+
+```{r}
+norm_entropy <- function(x) { #x es un factor
+  H <- entropy(x)
+  n <- length(x)
+  H_norm <- H/log2(n)
+  return(H_norm)
+}
+```
+
+
+Un ejemplo es:
+```{r}
+data_factor <- factor(c("A", "B", "A", "C", "B", "A", "D", "D", "C", "A"))
+norm_entropy(data_factor)
+```
+
+Si $H_{norm}=1$ indica que el sistema tiene la máxima incertidumbre posible. Esto significa que todos los resultados son igualmente probables, y no hay ninguna estructura o patrón discernible.
+
+Si $H_{norm}=0$ indica que el sistema es completamente predecible (por ejemplo, una probabilidad de 1 para un único resultado).
+
+Y si $0<H_{norm}<1$ indica que el sistema tiene un nivel intermedio de incertidumbre o desorden.
+
+De la misma manera que con la entropía, en el análisis de datos nos interesa poder calcular la entropía normalizada de todo el dataset por lo que también he creado una función que me permite calcular la entropía normalizada de todas las variables (columnas) de un data frame de clase factor.
+
+Esta será la función:
+```{r}
+norm_entropy_df <- function(df) {
+  df_entropy_norm <- as.numeric(sapply(df, FUN=norm_entropy))
+  return(df_entropy_norm)
+}
+```
+
+
+Y este el ejemplo de uso:
+```{r}
+data_frame <- data.frame(Color = factor(c("Rojo", "Verde", "Azul", "Rojo", "Verde", "Verde")),
+Forma = factor(c("Círculo", "Cuadrado", "Círculo", "Cuadrado", "Cuadrado", "Círculo")),
+Tamaño = factor(c("Grande", "Pequeño", "Pequeño", "Grande", "Grande", "Pequeño")))
+norm_entropy_df(data_frame)
+```
+
+Nos devuelve un vector numérico con la entropía normalizada de todas las variables.
+
+Para terminar con la sección de la entropía, he creado una última función que puede ser útil a la hora de gestionar los datos. La función que mostraré a continuación, sirve para filtrar un dataset según el valor de entropía de sus variables. Es decir, dado un data frame de clase factor y un valor numérico que represente la entropía umbral, esta función nos devuelve el data frame de clase factor sólamente con aquellas variables que cumplan con tener la entropía mayor que el valor umbral. Las variables (columnas) que no cumplan con ese requisito se eliminarán.
+
+```{r}
+filtro_entropia <- function(x, H_umbral) {#x es un data set y H_umbral es el valor umbral de la entropia
+  entropy_x <- entropy_df(x) #calcula las entropias de cada columna y nos devuelve un vector
+  n_col <- ncol(x)
+
+  #ver que columnas estan por encima del umbral
+  true_cols <- entropy_x > H_umbral #nos devuelve un vector logico: TRUE si es mas grande y FALSE si no
+
+  #conseguir los indices de los TRUE
+  indices <- c() #inicializar el vector de los indices
+  for (i in 1:n_col) {
+    if (true_cols[i]==TRUE) {
+      indices <- c(indices, i)
+    }
+  }
+
+  #filtrar el data set
+  x_filtrado <- x[,indices]
+
+  return(x_filtrado)
+}
+```
+
+
+Ejemplo de uso:
+```{r}
+data_frame <- data.frame(Color = factor(c("Rojo", "Verde", "Azul", "Rojo", "Verde", "Verde")),
+Forma = factor(c("Círculo", "Cuadrado", "Círculo", "Cuadrado", "Cuadrado", "Círculo")),
+Tamaño = factor(c("Grande", "Pequeño", "Pequeño", "Grande", "Grande", "Pequeño")))
+filtro_entropia(data_frame, 1)
+```
+
+
+Nos devuelve un data frame de clase factor sólamente con las variables que cumplen el requisito.
+
+Una función que elimina las variables con una entropía por debajo de un umbral dado en un dataset puede ser útil para selección de características en el análisis de datos y en el aprendizaje automático. En particular, al aplicar un filtro de entropía se pueden eliminar variables que contienen poca información útil, reduciendo así la complejidad y mejorando la eficiencia del modelo.
+
+##Información mutua
+La información mutua es una medida de dependencia entre dos variables aleatorias, que indica cuánta información comparte una variable con otra. En otras palabras, muestra cuánta "incertidumbre" sobre una variable es reducida cuando conocemos la otra variable. Es una herramienta muy útil en análisis de datos y aprendizaje automático para evaluar la relación entre variables, especialmente en la selección de características.
+
+Se calcula de la siguiente manera:
+$$
+I(X;Y)=\sum_{y \in Y} \sum_{x \in X} p(x,y)log(\frac{p(x,y)}{p(x)p(y)}) 
+$$
+donde 
+$I(X;Y)$ es la información mutua entre la variable $X$ e $Y$,
+$p(x,y)$ es la probabilidad conjunta de los valores $x$ e $y$
+$p(x)$ es la probabilidad marginal de $X$ y
+$p(y)$ es la probabilidad marginal de $Y$.
+
+Pero, esta expresión se puede modificar para que la información mutua se escriba en función de la entropía de las variables. De esta manera:
+
+$$
+I(X;Y)=H(X)+H(Y)-H(X,Y)
+$$
+donde
+$I(X;Y)$ es la información mutua entre la variable $X$ e $Y$,
+$H(X)$ es la entropía de la variable $X$,
+$H(Y)$ es la entropía de la variable $Y$ y
+$H(X,Y)=-\sum_{y \in Y} \sum_{x \in X} p(x,y)log(p(x,y))$ es la entropía conjunta de $X$ e $Y$ que mide la incertidumbre de ambas variables consideradas juntas.
+
+Ya que anteriormente hemos creado las funciones para calcular la entropía de distintas variables, en esta función vamos a aprovecharlas y usarlas internamente para calcular la información mutua. Por lo que esta función toma de entrada un data frame de clase factor, calcula las entropías de cada variable con la función que he enseñado anteriormente y luego calcula $H(X,Y)$ para luego poder calcular la información mutua.
+
+```{r}
+info_mutua <- function(x) {#correlación para variables categoricas x es un data frame / matriz categorica de factores
+  #info mutua se calcula de la siguiente manera
+  #I(X;Y)= sum_xsum_y p(x, y)log(p(x, y)/p(x)p(y))
+  #donde X e Y son dos variables o columnas de un data set
+  # o si lo expresamos mediante entropia
+  #I(X;Y)= H(X)+H(Y)-H(X,Y)
+  #donde H(x, y)= -sum_xsum_y p(x, y)log(p(x, y))
+
+  n_col <- ncol(x) # número de variables
+  n_row <- nrow(x)
+  matriz_infomutua <- matrix(0, nrow=n_col, ncol=n_col) # inicializamos la matriz de resultados
+
+  # Calculamos la entropía de cada variable
+  H_variable <- entropy_df(x) # nos devuelve un vector de entropías de cada columna
+
+  for (i in 1:n_col) {
+    categ1 <- levels(x[[i]]) # los niveles o categorías en la columna i
+    for (j in 1:n_col) {
+      categ2 <- levels(x[[j]]) # los niveles o categorías en la columna j
+
+      # Inicializar la matriz de probabilidades conjuntas
+      p_x_y <- matrix(0, nrow=length(categ1), ncol=length(categ2))
+
+      # Contar las ocurrencias de cada combinación de categoría
+      for (m in 1:n_row) {
+        cat1_index <- which(categ1 == x[m, i])  # Índice de la categoría en la columna i (un vector con el indice de la categoria en cada elemento)
+        cat2_index <- which(categ2 == x[m, j])  # Índice de la categoría en la columna j
+
+        # Asegurarse de que ambos índices sean válidos
+        if (length(cat1_index) > 0 && length(cat2_index) > 0) {#compara no todos con todos si no el primer elemento con el primero el segundo con el segundo etc.
+          p_x_y[cat1_index, cat2_index] <- p_x_y[cat1_index, cat2_index] + 1 # sumamos en cada sitio
+        }
+      }
+
+      # Calcular las probabilidades conjuntas
+      p_x_y <- p_x_y / n_row
+
+      # Calcular H(X, Y) usando probabilidad conjunta
+      H_XY <- -sum(p_x_y * log(p_x_y + 1e-10), na.rm = TRUE)  # Sumar una pequeña constante para evitar log(0)
+
+      # Calcular I(X; Y) = H(X) + H(Y) - H(X, Y)
+      
+      matriz_infomutua[i, j] <- H_variable[i] + H_variable[j] - H_XY
+      
+    }
+  }
+
+  return(matriz_infomutua)
+}
+```
+
+
+Ejemplo de uso:
+```{r}
+data <- data.frame(
+Columna_A = as.factor(c("Rojo", "Rojo", "Azul", "Verde", "Rojo", "Azul", "Verde", "Verde")),
+Columna_B = as.factor(c("Alto", "Medio", "Medio", "Bajo", "Alto", "Bajo", "Alto", "Medio")),
+Columna_C = as.factor(c("Bajo", "Alto", "Medio", "Bajo", "Medio", "Bajo", "Alto", "Medio")))
+info_mutua(data)
+```
+
+
+Nos devuelve una matriz numérica, es decir, la matriz de información mutua.
+
+Si la información mutua es muy alta indica que una variable contiene mucha información sobre la otra, es decir, hay una fuerte dependencia o relación entre ellas. Y si la información mutua es baja o cercana a 0, indica que las variables son casi independientes; saber el valor de una variable no aporta mucha información sobre la otra.
+
+##Area Under Curve (AUC)
+El AUC (Área bajo la Curva ROC) es una métrica ampliamente utilizada para evaluar el rendimiento de modelos de clasificación, especialmente cuando se trata de problemas de clasificación binaria. AUC significa "Área bajo la Curva" (en inglés, "Area Under Curve") y mide el área bajo la Curva ROC (Receiver Operating Characteristic). Esta curva traza la tasa de verdaderos positivos frente a la tasa de falsos positivos en diferentes umbrales de decisión del modelo.
+
+Cuanto mayor es el AUC, mejor es el modelo para distinguir entre las clases positivas y negativas. Un AUC cercano a 1 indica una buena capacidad de discriminación.
+
+Para calcular el AUC, primero se construye la Curva ROC, y el procedimiento es el
+siguiente. Supongamos que tenemos una matriz de dos columnas, la primera, el valor de la variabla a analizar y la segunda, la etiqueta o clase asociada a dicho valor. Por simplicidad, asumiremos que la etiqueta será de tipo logic, es decir, TRUE o FALSE. El primer paso será ordenar las filas de acuerdo al valor de la variable (primera columna). A continuación, para un cierto valor de corte definiremos todas aquellas filas por encima de ese valor como predichas positivas (TRUE) y todas aquellas por debajo como
+predichas negativas (FALSE). Comparando la `predicción' con la etiqueta real (segunda columna de la matriz), podremos caracterizar cada ejemplo (cada fila) como verdadero positivo (TP) cuando predicción y etiqueta real sean TRUE, falso positivo (FP) cuando la predicción sea TRUE pero la etiqueta real sea FALSE, verdadero negativo (TN) si ambas son FALSE y falso negativo (FN) si la predicción es FALSE pero la etiqueta real es TRUE. Para cada posible valor de corte de la variable tendremos un valor de TP, TN,
+FP y FN. De ellos, se pueden derivar dos valores:
+
+1. La Tasa de Verdaderos Positivos (TPR por sus siglas en inglés):
+$$
+TPR=\frac{True Positives (TP)}{True Positives (TP) + False Negatives (FN)}
+$$
+donde
+$TPR$ es la Tasa de Verdaderos positivos que representa la proporción de positivos correctamente identificados por el modelo,
+$TP$ es el número de verdaderos positivos (cuando la predicción y etiqueta real sean TRUE a la vez)
+$FN$ es el número de falsos negativos (si la predicción es FALSE pero la etiqueta real TRUE).
+
+2. La Tasa de Falsos Positivos (FPR por sus siglas en inglés):
+$$
+FPR= \frac{False Positives (FP)}{False Positives(FP)+True Negatives(TN)}
+$$
+donde
+$FPR$ es la tasa de falsos positivos que indica la proporción de negativos incorrectamente clasificados como positivos,
+$FP$ es el número de falsos positivos (cuando la predicción sea TRUE pero la etiqueta real sea FALSE),
+$TN$ es el número de verdaderos negativos (si ambas son FALSE).
+
+La Curva ROC se construye trazando la TPR en el eje $y$ y la FPR en el eje $x$, variando el umbral de decisión desde 0 hasta 1.
+
+Finalmente, el AUC es simplemente el área bajo la curva ROC. Se calcula integrando el área bajo la curva en el gráfico TPR vs. FPR. En la práctica, el AUC se aproxima calculando la suma de los trapecios formados bajo la curva ROC.
+
+La fórmula para hacer la suma de los trapecios es la siguiente:
+$$
+Area \approx \sum_{i=0}^{n-1} \frac{y_i+y_{i+1}}{2}(x_{i+1}-x_i)
+$$
+donde
+$y_i$ y $y_{i+1}$ son los valores de la función en los puntos $x_i$ y $x_{i+1}$ que es la base del trapecio,
+$(x_{i+1}-x_i)$ es la distancia entre dos puntos consecutivos en el eje $x$ que es la altura del trapecio.
+
+Por lo que, la función que he creado primero toma el data frame y analiza si hay una variable binaria de tipo factor en el dataset. Si no la hay se para la función y si encuentra una variable binaria, convierte la columna binaria a valores lógicos de TRUE o FALSE.
+
+Después, ordenamos el data frame de menor a mayor según la variable numérica y creamos un vector de valores de corte utilizando todos los valores únicos de esa variable numérica. Por cada valor de corte, hacemos las predicciones y calculamos los TP, TN, FP y FN para poder calcular la Tasa de Verdaderos Positivos (TPR) y la Tasa de Falsos Positivos (FPR) y guardamos cada par de TPR y FPR para poder luego graficarlos utilizando otra función que explicaremos más adelante. Una vez que tenemos todos los puntos del ROC calculamos el AUC utilizando la regla de la suma de los trapecios.
+
+```{r}
+AUC <- function(df) {
+  # df: primera col --> vector numérico; segunda col --> vector lógico/binario
+  
+  # Identificar la columna binaria (la que tiene dos niveles)
+  bin_col_index <- which(sapply(df, function(x) is.factor(x) && length(levels(x)) == 2))[1]
+  
+  # Si no hay una columna binaria, retornar un error
+  if (is.na(bin_col_index)) {
+    stop("No hay una columna binaria en el dataframe.")
+  }
+  
+  # Ordenar el data frame de menor a mayor valor de la primera col
+  df_orden <- df[order(df[, 1]), ]
+  
+  # Convertir la columna binaria a valores lógicos
+  clase_col <- df_orden[[bin_col_index]]
+  clase_logica <- as.logical(ifelse(clase_col == levels(clase_col)[1], FALSE, TRUE))  # Asignar FALSE y TRUE
+  
+  
+  
+  # Crear un vector de valores de corte (usamos todos los valores únicos de la primera columna)
+  val_corte <- unique(df_orden[, 1])
+  
+  # Inicializar matriz para guardar los pares de (FPR, TPR)
+  result <- matrix(nrow = length(val_corte), ncol = 2)
+  
+  for (i in seq_along(val_corte)) {
+    # Conseguir un vector lógico comparando cada valor de la columna con el valor de corte
+    v_logico <- df_orden[, 1] > val_corte[i]
+    
+    # Calcular True Positives (TP)
+    TP <- sum(v_logico & clase_logica)
+    
+    # Calcular True Negatives (TN)
+    TN <- sum(!v_logico & !clase_logica)
+    
+    # Calcular False Negatives (FN)
+    FN <- sum(!v_logico & clase_logica)
+    
+    # Calcular False Positives (FP)
+    FP <- sum(v_logico & !clase_logica)
+    
+    # Calcular True Positive Rate (TPR)
+    TPR <- ifelse((TP + FN) == 0, 0, TP / (TP + FN))
+    
+    # Calcular False Positive Rate (FPR)
+    FPR <- ifelse((FP + TN) == 0, 0, FP / (FP + TN))
+    
+    # Guardar el TPR y FPR en la matriz
+    result[i, ] <- c(FPR, TPR)
+  }
+  
+  # Añadir (0, 0) y (1, 1) si no están presentes
+  if (!any(result[, 1] == 0 & result[, 2] == 0)) {
+    result <- rbind(c(0, 0), result)
+  }
+  
+  if (!any(result[, 1] == 1 & result[, 2] == 1)) {
+    result <- rbind(result, c(1, 1))
+  }
+  
+  #ordenar los resultados segun el valor de la primera columna de menor a mayor
+  
+  result <- result[order(result[, 1]), ]
+  # Calcular el AUC utilizando la regla del trapecio
+  area <- 0
+  for (k in 2:nrow(result)) {
+    # Calcular la anchura del intervalo
+    h <- abs(result[k-1, 1] - result[k, 1])
+    # Aplicar la regla del trapecio
+    area <- area + 0.5 * (result[k-1, 2] + result[k, 2]) * h
+    
+  }
+  
+  return(list(result = result, area = area))
+}
+```
+
+
+Un ejemplo:
+```{r}
+set.seed(123)
+data_frame <- data.frame(
+Variable1 = rnorm(100),  # 100 números aleatorios
+VariableBinaria = factor(sample(c(0, 1), 100, replace = TRUE)))
+AUC(data_frame)
+```
+
+
+La función nos devuelve una lista con dos elementos: una matriz numérica con cada par de TPR y FPR, y un valor numérico que representa el AUC.
+
+AUC = 1: Indica un modelo perfecto, que clasifica todos los positivos y negativos correctamente sin errores.
+AUC = 0.5: Indica un modelo sin capacidad predictiva, equivalente a una clasificación aleatoria.
+AUC < 0.5: Indica que el modelo es peor que una clasificación aleatoria (lo que suele ser una señal para revisar el modelo o los datos).
+
+##Cálculo de métricas dependiendo del tipo de variable
+Hasta ahora, hemos asumido que los datasets tenían las variables de la misma clase (variables de clase factor en el caso de la entropía, variables numéricas en el caso de la correlación etc.) pero muchas veces, nos encontraremos con datasets que contienen distintos tipos de variables. Para ello, he creado dos funciones para que dependiendo de la clase de la variable, actúe de una forma o de otra.
+
+Por un lado tenemos la función que calcula la varianza y el AUC cuando la variable es numérica y la entropía si la variable es de tipo factor. Por lo que la función toma un data frame que puede contener columnas numéricas o de clase factor y lo que hace en primer lugar es iterar sobre cada columna (variable) del dataset y calcular la varianza si la columna es numérica. También calculará el AUC si identifica una columna binaria en el dataset. Y por último, si la columna es de clase factor, calculará la entropía. Finalmente, recoge todos los resultados en un data frame numérico que es lo que nos devuelve la función.
+
+```{r}
+calcular_metricas <- function(df) {
+  # Inicializar listas para resultados
+  varianzas <- rep(NA, ncol(df))
+  auc_values <- rep(NA, ncol(df))
+  entropias <- rep(NA, ncol(df))
+
+  # Iterar sobre cada columna del dataframe
+  for (i in seq_along(df)) {
+    col <- df[[i]]
+
+    # Calcular varianza si la columna es numérica
+    if (is.numeric(col)) {
+      varianzas[i] <- var_vector(col)
+
+      # Calcular AUC si hay una columna binaria
+      bin_col_index <- which(sapply(df, function(x) is.factor(x) && length(levels(x)) == 2))[1]
+      if (!is.na(bin_col_index)) {
+        bin_col <- df[[bin_col_index]]
+        df_auc <- data.frame(num_col = col, bin_col = bin_col)
+        auc_values[i] <- AUC(df_auc)$area
+      }
+    }
+
+    # Calcular entropía si la columna es categórica
+    if (is.factor(col)) {
+      entropias[i] <- entropy(col)
+    }
+  }
+
+  # Crear el dataframe de resultados
+  resultados <- data.frame(
+    Variable = names(df),
+    Varianza = varianzas,
+    AUC = auc_values,
+    Entropía = entropias
+  )
+
+  return(resultados)
+}
+```
+
+
+Un ejemplo:
+```{r}
+data <- data.frame(Score = as.numeric(c(0.1, 0.4, 0.35, 0.6, 0.3, 0.75, 0.55, 0.8)),
+Outcome = as.factor(c("Negative", "Negative", "Negative", "Positive", "Negative", "Positive", "Positive", "Positive")))
+calcular_metricas(data)
+```
+
+
+Como vemos, esta función utiliza las funciones que hemos mencionado anteriormente para calcular la varianza, el AUC y la entropía. En el caso del AUC, la función toma un data frame como entrada por lo que antes de utilizar la función, identificamos la columna numérica y la columna binaria y creamos un data frame de dos columnas antes de pasarle los datos a la función de AUC.
+
+
+En este apartado tenemos una segunda función que calcula la correlación entre pares si las variables son numéricas y calcula la información mutua si las variables son categóricas. Por lo que la función toma un data frame que puede contener columnas numéricas o de clase factor y lo que hace en primer lugar es identificar de qué tipo es cada columna y guarda la clase en un vector. Después, itera por pares de columnas en el data frame y calcula la correlación si ambas son numéricas o la información mutua si ambas son de clase factor. En el caso de que una columna sea de tipo numérico y otra de tipo factor no hace nada y los ignora.
+
+```{r}
+cor_infomutua <- function(df) {#df es un data frame
+
+  # Identifica el número de columnas y el tipo de cada columna
+  n_col <- ncol(df)
+  tipos <- sapply(df, class)
+
+  # Matriz de resultados
+  result_matrix <- matrix(NA, nrow = n_col, ncol = n_col)
+  colnames(result_matrix) <- colnames(df)
+  rownames(result_matrix) <- colnames(df)
+
+  # Calcular correlaciones e información mutua entre cada par de columnas
+  for (i in 1:n_col) {
+    for (j in 1:n_col) {
+      # Si ambas variables son numéricas, calcula correlación
+      if (tipos[i] == "numeric" && tipos[j] == "numeric") {
+        matriz_dat <- df[, c(i, j)]  # Matriz de datos para este par
+        result_matrix[i, j] <- cor_fun(matriz_dat)[1,2]  # Correlación
+      }
+      # Si ambas variables son factores, calcula información mutua
+      else if (tipos[i] == "factor" && tipos[j] == "factor") {
+        matriz_categ <- df[, c(i, j)]
+        result_matrix[i, j] <- info_mutua(matriz_categ)[1, 2]  # Información mutua
+      }
+      else { #cuando una columna es factor y otra numerica los ignoramos
+        result_matrix[i,j] <- NA
+      }
+    }
+  }
+
+  return(result_matrix)
+}
+```
+
+
+Un ejemplo:
+```{r}
+dataset <- data.frame(var_num1 = rnorm(100),                 # Variable numérica
+var_num2 = rnorm(100, mean = 5),       # Otra variable numérica
+var_cat1 = factor(sample(letters[1:3], 100, replace = TRUE)),  # Variable categórica con 3 categorías
+var_cat2 = factor(sample(letters[1:4], 100, replace = TRUE)))   # Variable categórica con 4 categorías)
+cor_infomutua(dataset)
+```
+
+
+Por lo que la función nos devuelve una matriz de clase numérico.
+
+##Funciones de plot
+En este apartado, explicaré las funciones que he creado para la visualización de algunas métricas que he ido calculando a lo largo de este trabajo.
+
+La primera función de este apartado será la función que visualiza la curva ROC. Esta función, tomará un data frame que tendrá por lo menos una columna numérica y una columna binaria de clase factor y calculará los pares de puntos TPR y FPR utilizando internamente la función AUC descrita anteriormente. Luego, creará un gráfico con esos puntos y también dibujará la curva que tendríamos si el AUC=0.5. Es decir, la curva equivalente a una clasificación aleatoria.
+
+```{r}
+plot_AUC <- function(x) { #x será una matriz/ data frame
+  data_AUC <- AUC(x)
+  plot(data_AUC$result, type="l", col="blue", main="La curva ROC", xlab="Tasa de Falsos Positivos (FPR)",
+       ylab="Tasa de Verdaderos Positivos (TPR)", xlim=c(0, 1), ylim=c(0,1))
+  abline(a=0, b=1, col="red", lty=2) #la linea que define la probabilidad del 50% (es decir random)
+  legend("bottomright",               # Especificar la posición de la leyenda
+         legend = c("Curva ROC", "Random Chance"), # Textos de la leyenda
+         col = c("blue", "red"),      # Colores de las líneas
+         lty = c(1, 2),                # Estilos de las líneas (1 para sólida, 2 para punteada)
+         lwd = 2)                     # Ancho de las líneas
+
+}
+```
+
+
+El ejemplo:
+```{r}
+set.seed(123)
+data_frame <- data.frame(
+Variable1 = rnorm(100),  # 100 números aleatorios
+VariableBinaria = factor(sample(c(0, 1), 100, replace = TRUE)))
+plot_AUC(data_frame)
+```
+
+Una segunda función sirve para visualizar la entropía normalizada de las variables de un dataset. Esta función tomará un data frame con variables categóricas de clase factor, luego utilizará la función que calcula la entropía normalizada (anteriormente descrita) para cada variable (columna) y finalmente creará un gráfico de barras. A cada variable le corresponde una de las barras.
+
+```{r}
+plot_entropy <- function(df) { #data frame de categorias
+  H_norm <- norm_entropy_df(df)
+  n<- length(H_norm)
+  names_bar <- seq(n)
+  barplot(H_norm, xlab="Número de variables", ylab="Entropía normalizada",
+          main="Diagrama de barras para la entropía normalizada de cada variable",
+          space=0, col="orange", las=1, names.arg=names_bar)
+
+}
+```
+
+
+Un ejemplo:
+```{r}
+data <- data.frame(Columna_A = as.factor(c("Rojo", "Rojo", "Azul", "Verde", "Rojo", "Azul", "Verde", "Verde")),
+Columna_B = as.factor(c("Círculo", "Cuadrado", "Círculo", "Cuadrado", "Cuadrado", "Círculo", "Triángulo", "Círculo")),
+Columna_C = as.factor(c("Bajo", "Alto", "Medio", "Bajo", "Medio", "Bajo", "Alto", "Medio")))
+plot_entropy(data)
+```
+
+Una tercera función permite visualizar un mapa de calor de una matriz de correlaciones. Esta función tomará un data frame con variables numéricas y calculará internamente la matriz de correlaciones utilizando la función que hemos descrito anteriormente y finalmente crea un mapa de calor para visualizar las correlaciones.
+
+```{r}
+plot_cor <- function(x) { #x es un conjunto de datos matriz / data frame
+  correlaciones <- cor_fun(x)
+  nombres_columnas <- colnames(x)
+  heatmap(correlaciones, main="Mapa de calor para la matriz de correlaciones",
+          Rowv = NA, Colv = NA, labRow = nombres_columnas, labCol = nombres_columnas )
+}
+```
+
+
+Un ejemplo:
+```{r}
+set.seed(123)
+datos_ejemplo <- data.frame(
+Var1 = rnorm(100),
+Var2 = rnorm(100),
+Var3 = rnorm(100),
+Var4 = rnorm(100))
+plot_cor(datos_ejemplo)
+```
+
+
+En un mapa de calor cuánto más intenso sea el color, mayor será la correlación entre esas variables. Y por el contrario, cuánto más apagado sea el color, menor será la correlación. En este ejemplo, vemos cómo la diagonal tiene el color más intenso. Esto se debe a que la correlación entre una variable sobre sí misma es máxima.
+
+Para terminar, tenemos una última función para visualizar la información mutua de un dataset. Esta función tomará un data frame con variables categóricas de clase factor y calculará internamente la matriz de información mutua utilizando la función que hemos descrito anteriormente y finalmente crea un mapa de calor para visualizar las información mutua.
+
+```{r}
+plot_infomutua <- function(x) {#x es un conjunto de datos categoricos
+  matriz_im <- info_mutua(x)
+  nombres_columnas <- colnames(x)
+  heatmap(matriz_im, main="Mapa de calor para la matriz de información mutua",
+          Rowv = NA, Colv = NA, labRow = nombres_columnas, labCol = nombres_columnas )
+}
+```
+
+
+Un ejemplo:
+```{r}
+data <- data.frame(Columna_A = as.factor(c("Rojo", "Rojo", "Azul", "Verde", "Rojo", "Azul", "Verde", "Verde")),
+Columna_B = as.factor(c("Alto", "Medio", "Medio", "Bajo", "Alto", "Bajo", "Alto", "Medio")),
+Columna_C = as.factor(c("Bajo", "Alto", "Medio", "Bajo", "Medio", "Bajo", "Alto", "Medio")))
+plot_infomutua(data)
+```
+
+Lo mismo que ocurre en el mapa de calor de las correlaciones, cuánto más intenso sea el color, mayor será la información mutua entre esas variables.
+
+##Otras funciones interesantes para la gestión de datos
+###Eliminar filas duplicadas
+Esta función encuentra filas de datos duplicadas en el dataset y los elimina.
+
+Los duplicados pueden introducir errores y sesgos en el análisis. Si un mismo registro está repetido, puede hacer que ciertos valores o patrones parezcan más frecuentes de lo que realmente son, lo que afecta la precisión de los resultados. También pueden distorsionar métricas como la media, la desviación estándar y otras estadísticas, reduciendo la validez de los resultados.
+
+Por todo esto, esta función podría ser interesante para el preprocesamiento de datos.
+
+```{r}
+remove_duplicates <- function(data) {
+  # Encontrar filas duplicadas
+  duplicated_rows <- duplicated(data)
+  
+  # Filtrar el data frame para conservar solo filas únicas
+  data_unique <- data[!duplicated_rows, ]
+  
+  # Devolver el data frame sin duplicados
+  return(data_unique)
+}
+```
+
+
+Un ejemplo:
+```{r}
+data_with_duplicates <- data.frame(
+ID = c(1, 2, 2, 3, 4, 4, 5),
+Value = c("A", "B", "B", "C", "D", "D", "E"))
+remove_duplicates(data_with_duplicates)
+```
+
+Por lo tanto, toma un data frame de cualquier clase y devuelve otro data frame con las filas duplicadas eliminadas.
+
+###Dividir el data set en entrenamiento y prueba
+Esta función como el nombre lo indica, divide un dataset en dos: uno para entrenamiento y otro para prueba. 
+
+La idea es crear un conjunto que el modelo usará para aprender (entrenamiento) y otro para evaluarlo (prueba), asegurando que el modelo sea capaz de generalizar bien a datos nuevos. El objetivo es que el modelo sea preciso no solo en los datos que conoce (entrenamiento) sino también en datos que no ha visto (prueba). Al entrenarlo en un conjunto y evaluarlo en otro, puedes medir qué tan bien generaliza a datos desconocidos, lo cual es crucial para que el modelo sea útil en el mundo real.
+
+Cuando el modelo memoriza demasiado los datos de entrenamiento, se adapta a ellos de forma específica y no generaliza bien, lo que se llama sobreajuste (overfitting). La evaluación en el conjunto de prueba permite identificar si el modelo está sobreajustado.
+
+La función que he creado es la siguiente:
+```{r}
+split_data <- function(data, train_ratio = 0.7, seed = NULL) {
+  # Si se especifica, establecer la semilla para reproducibilidad
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
+  
+  # Número total de observaciones
+  n <- nrow(data)
+  
+  # Determinar el número de muestras para el conjunto de entrenamiento
+  train_size <- floor(train_ratio * n)
+  
+  # Obtener índices aleatorios para el conjunto de entrenamiento
+  train_indices <- sample(seq_len(n), size = train_size)
+  
+  # Dividir el data frame
+  train_data <- data[train_indices, ]
+  test_data <- data[-train_indices, ]
+  
+  # Devolver los conjuntos como una lista
+  return(list(train = train_data, test = test_data))
+}
+```
+
+
+Y un ejemplo:
+```{r}
+data <- data.frame(
+ID = 1:10,
+Value = c(5, 3, 8, 2, 6, 9, 1, 7, 4, 10))
+split_data(data, train_ratio = 0.7, seed = 123)
+```
+
+
+En la función que he creado, si no se especifica el porcentaje de los datos que queremos tener en el set de entrenamiento el valor por defecto será 0.7. La función toma un data frame de clase numérico, un valor numérico entre 0 y 1 (que será el porcentaje de datos en el set de entrenamiento) y un valor numérico para la reproducibilidad. La función obtiene ese procentaje de los datos aleatoriamente y los guarda en un set (el de entrenamiento), por lo cual el resto los guarda en otro (el de prueba). La función devuelve una lista con dos data frames numéricos.
+
+#Conclusiones
+Con el presente trabajo he podido implementar distintas funciones que son fundamentales para el análisis y gestión de datos y a su vez, he conseguido un buen conocimiento del lenguaje de programación R.

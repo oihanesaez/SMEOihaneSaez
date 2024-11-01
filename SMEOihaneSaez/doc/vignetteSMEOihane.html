@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Oihane Saez Murgiondo" />
+
+<meta name="date" content="2024-11-01" />
+
+<title>Documentación de todas las funciones del paquete</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Documentación de todas las funciones del
+paquete</h1>
+<h4 class="author">Oihane Saez Murgiondo</h4>
+<h4 class="date">2024-11-01</h4>
+
+
+
+<p>#Introducción En esta vignette explicaré todas las funciones que he
+implementado para la asignatura de Software Matemático y Estadístco las
+cuales están integradas en el paquete “SMEOihaneSaez” y daré algún
+ejemplo de su uso en cada caso.</p>
+<p>Las funciones que se han implementado son funciones básicas que
+sirven para el análisis y gestión de datos. Tenemos distintas funciones
+y a modo de resumen algunas de ellas son las siguentes: funciones para
+la discretización, normalización, estandarización y para calcular
+métricas distintas como la correlación y la entropía.</p>
+<p>#Funciones</p>
+<p>##Discretización Equal Width</p>
+<p>Para empezar, he implementado distintas funciones de discretización
+para variables numéricas.</p>
+<p>Por un lado, tenemos la función de Discretización Equal Width la cual
+discretiza un vector numérico en intervalos de igual anchura. Lo que
+significa que la función toma un vector numérico y un valor numérico
+para indicar en cuántos intervalos se debe discretizar el vector. Esta
+función crea los intervalos de manera que todos los intervalos tengan la
+misma anchura.</p>
+<p>Esta es mi función:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>discretizeEW <span class="ot">&lt;-</span> <span class="cf">function</span>(x, num.bins) {</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="co"># Encontrar el valor mínimo y máximo de x</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  num_max <span class="ot">&lt;-</span> <span class="fu">max</span>(x)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  num_min <span class="ot">&lt;-</span> <span class="fu">min</span>(x)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="co"># Calcular el tamaño del intervalo</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  length_lim <span class="ot">&lt;-</span> (num_max <span class="sc">-</span> num_min) <span class="sc">/</span> num.bins</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="co"># Crear los puntos de corte</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  puntos_de_corte <span class="ot">&lt;-</span> num_min <span class="sc">+</span> (<span class="dv">1</span><span class="sc">:</span>(num.bins <span class="sc">-</span> <span class="dv">1</span>)) <span class="sc">*</span> length_lim</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="co"># Inicializar el vector categórico</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  vector_categ <span class="ot">&lt;-</span> <span class="fu">character</span>(<span class="fu">length</span>(x))</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="co"># Asignar categorías</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>    <span class="cf">if</span> (x[i] <span class="sc">&lt;=</span> <span class="fu">min</span>(puntos_de_corte)) {</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>      vector_categ[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;I(-infty,&quot;</span>, <span class="fu">min</span>(puntos_de_corte), <span class="st">&quot;]&quot;</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (x[i] <span class="sc">&gt;=</span> <span class="fu">max</span>(puntos_de_corte)) {</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>      vector_categ[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;I[&quot;</span>,<span class="fu">max</span>(puntos_de_corte), <span class="st">&quot;, +infty)&quot;</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>      <span class="co"># Aquí se ajusta el bucle para incluir el punto de corte</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>      <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(num.bins <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>        <span class="cf">if</span> (x[i] <span class="sc">&lt;=</span> puntos_de_corte[j]) {</span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>          vector_categ[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;I(&quot;</span>, <span class="fu">round</span>(puntos_de_corte[j <span class="sc">-</span> <span class="dv">1</span>], <span class="dv">2</span>), <span class="st">&quot;,&quot;</span>, <span class="fu">round</span>(puntos_de_corte[j], <span class="dv">2</span>), <span class="st">&quot;]&quot;</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>          <span class="cf">break</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>        }</span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a>      }</span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>    }</span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>  }</span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a>  <span class="co"># Devuelve el vector categorico</span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a>  vector_categ<span class="ot">&lt;-</span> <span class="fu">as.factor</span>(vector_categ)</span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>  <span class="fu">return</span>(vector_categ)</span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a>}</span></code></pre></div>
+<p>Un ejemplo de su uso es la siguiente:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">10</span>, <span class="dv">80</span>, <span class="dv">20</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">discretizeEW</span>(a, <span class="dv">4</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; [1] I[77.5, +infty) I(32.5,55]      I(55,77.5]      I(-infty,32.5] </span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; [5] I[77.5, +infty) I(-infty,32.5] </span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; Levels: I(-infty,32.5] I(32.5,55] I(55,77.5] I[77.5, +infty)</span></span></code></pre></div>
+<p>Como vemos, la función nos devuelve un vector de clase factor en este
+caso con 4 niveles (levels) ya que le hemos indicado que queremos
+discretizar en 4 intervalos. Por otro lado, vemos que a cada elemento
+numérico del vector se le ha asignado su correspondiente intervalo.</p>
+<p>Esta función sólo nos vale para vectores pero, si tenemos un data set
+completo, nos interesa que se puedan discretizar todas las variables del
+data set. Para eso he creado una segunda función para que dado un data
+frame numérico, la función nos devuelva un data frame de tipo factor
+indicando en cada caso a qué intervalo corresponde ese valor y a la vez
+nos muestra todos los intervalos posibles para cada columna del data
+frame (para cada variable).</p>
+<p>La función es la siguiente:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>discretizeEW_df <span class="ot">&lt;-</span> <span class="cf">function</span>(x, num.bins) {</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  df_dis<span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">apply</span>(x, num.bins, <span class="at">MARGIN=</span><span class="dv">2</span>, <span class="at">FUN=</span>discretizeEW))</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">return</span>(df_dis)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>Un ejemplo de su uso es la siguiente:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Variable1 =</span> <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="fl">3.6</span>, <span class="fl">5.1</span>, <span class="fl">8.4</span>, <span class="fl">9.7</span>, <span class="fl">2.3</span>, <span class="fl">7.5</span>, <span class="fl">6.2</span>),</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="at">Variable2 =</span> <span class="fu">c</span>(<span class="fl">15.2</span>, <span class="fl">18.4</span>, <span class="fl">20.1</span>, <span class="fl">14.5</span>, <span class="fl">12.3</span>, <span class="fl">17.6</span>, <span class="fl">21.8</span>, <span class="fl">19.2</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">discretizeEW_df</span>(data, <span class="at">num.bins =</span> <span class="dv">3</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;                     Variable1                   Variable2</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 1  I(-infty,4.76666666666667]  I(-infty,15.4666666666667]</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 2  I(-infty,4.76666666666667]              I(15.47,18.63]</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 3                I(4.77,7.23] I[18.6333333333333, +infty)</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; 4 I[7.23333333333333, +infty)  I(-infty,15.4666666666667]</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 5 I[7.23333333333333, +infty)  I(-infty,15.4666666666667]</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 6  I(-infty,4.76666666666667]              I(15.47,18.63]</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 7 I[7.23333333333333, +infty) I[18.6333333333333, +infty)</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; 8                I(4.77,7.23] I[18.6333333333333, +infty)</span></span></code></pre></div>
+<p>##Discretización Equal Frecuency Una segunda función de
+discretización es la Discretización Equal Frecuency. Esta función toma
+un vector numérico y lo discretiza en intervalos con el mismo número de
+elementos en cada intervalo. Es decir, si yo tengo un vector numérico de
+6 elementos y quiero discretizarlo en 3 intervalos esta función creará
+los intervalos de tal forma que en cada intervalo queden 2 elementos del
+vector numérico.</p>
+<p>Mi función que implementa esto es la siguiente:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>discretizeEF <span class="ot">&lt;-</span> <span class="cf">function</span>(x, num.bins) {</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="co">#calcular el número de valores en cada intervalo</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  num_val<span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">length</span>(x)<span class="sc">/</span>num.bins) <span class="co">#ceiling() para redondear el número al valor más grande</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  x_orden <span class="ot">&lt;-</span> <span class="fu">sort</span>(x) <span class="co">#ordeno los valores de menor a mayor</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="co"># Inicializar el vector categórico</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  vector_categ <span class="ot">&lt;-</span> <span class="fu">character</span>(<span class="fu">length</span>(x))</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>  <span class="co"># Conseguir puntos de corte</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>  puntos_de_corte <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(num_val, <span class="fu">length</span>(x), <span class="at">by =</span> num_val)) {</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(puntos_de_corte)<span class="sc">==</span>num.bins<span class="dv">-1</span>){</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>      <span class="cf">break</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>    }</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>      puntos_de_corte <span class="ot">&lt;-</span> <span class="fu">c</span>(puntos_de_corte, x_orden[i])</span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>    }</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>  }</span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>  <span class="co"># Asignar categorías</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>    <span class="cf">if</span> (x[i] <span class="sc">&lt;=</span> <span class="fu">min</span>(puntos_de_corte)) {</span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>      vector_categ[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;I(-infty,&quot;</span>, <span class="fu">min</span>(puntos_de_corte), <span class="st">&quot;]&quot;</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (x[i] <span class="sc">&gt;</span> <span class="fu">max</span>(puntos_de_corte)) {</span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a>      vector_categ[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;I[&quot;</span>,<span class="fu">max</span>(puntos_de_corte), <span class="st">&quot;, +infty)&quot;</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a>      <span class="co"># Aquí se ajusta el bucle para incluir el punto de corte</span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a>      <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(num.bins <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a>        <span class="cf">if</span> (x[i] <span class="sc">&lt;=</span> puntos_de_corte[j]) {</span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>          vector_categ[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;I(&quot;</span>, <span class="fu">round</span>(puntos_de_corte[j <span class="sc">-</span> <span class="dv">1</span>], <span class="dv">2</span>), <span class="st">&quot;,&quot;</span>, <span class="fu">round</span>(puntos_de_corte[j], <span class="dv">2</span>), <span class="st">&quot;]&quot;</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a>          <span class="cf">break</span></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a>        }</span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a>      }</span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a>    }</span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a>  }</span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a>  <span class="co"># Devuelve vector categorico</span></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a>  vector_categ<span class="ot">&lt;-</span> <span class="fu">as.factor</span>(vector_categ)</span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a>  <span class="fu">return</span>(vector_categ)</span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a>}</span></code></pre></div>
+<p>Usando el mismo ejemplo que antes:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">10</span>, <span class="dv">80</span>, <span class="dv">20</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">discretizeEF</span>(a, <span class="dv">3</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; [1] I[60, +infty) I(20,60]      I(20,60]      I(-infty,20]  I[60, +infty)</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; [6] I(-infty,20] </span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; Levels: I(-infty,20] I(20,60] I[60, +infty)</span></span></code></pre></div>
+<p>Vemos que tenemos un vector numérico de 6 elementos y nos ha devuelto
+un vector de clase factor con tres niveles (ya que le hemos indicado que
+queremos discretizarlo en 3 intervalos) y en cada intervalo tenemos 2
+elementos como hemos explicado anteriormente.</p>
+<p>Igual que pasaba con la Discretización Equal Width esta función sólo
+nos vale para vectores pero, si tenemos un data set completo, nos
+interesa que se puedan discretizar todas las variables del data set.
+Para eso he creado una segunda función para que dado un data frame
+numérico, la función nos devuelva un data frame de tipo factor indicando
+en cada caso a qué intervalo corresponde ese valor y a la vez nos
+muestra todos los intervalos posibles para cada columna del data frame
+(para cada variable).</p>
+<p>Este sería la función para el data frame completo:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>discretizeEF_df <span class="ot">&lt;-</span> <span class="cf">function</span>(x, num.bins) {</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  df_dis<span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">apply</span>(x, num.bins, <span class="at">MARGIN=</span><span class="dv">2</span>, <span class="at">FUN=</span>discretizeEF))</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">return</span>(df_dis)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y este el ejemplo de uso:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Variable1 =</span> <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="fl">3.6</span>, <span class="fl">5.1</span>, <span class="fl">8.4</span>, <span class="fl">9.7</span>, <span class="fl">2.3</span>, <span class="fl">7.5</span>, <span class="fl">6.2</span>),</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="at">Variable2 =</span> <span class="fu">c</span>(<span class="fl">15.2</span>, <span class="fl">18.4</span>, <span class="fl">20.1</span>, <span class="fl">14.5</span>, <span class="fl">12.3</span>, <span class="fl">17.6</span>, <span class="fl">21.8</span>, <span class="fl">19.2</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">discretizeEF_df</span>(data, <span class="at">num.bins =</span> <span class="dv">3</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt;        Variable1       Variable2</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; 1  I(-infty,3.6]  I(-infty,15.2]</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 2  I(-infty,3.6]    I(15.2,19.2]</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 3     I(3.6,7.5] I[19.2, +infty)</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 4 I[7.5, +infty)  I(-infty,15.2]</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; 5 I[7.5, +infty)  I(-infty,15.2]</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; 6  I(-infty,3.6]    I(15.2,19.2]</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; 7     I(3.6,7.5] I[19.2, +infty)</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; 8     I(3.6,7.5]    I(15.2,19.2]</span></span></code></pre></div>
+<p>##Discretización dado los puntos de corte Para terminar con la
+discretización tenemos una última función que dado un vector numérico y
+una lista de puntos de corte, la función discretiza ese vector en los
+intervalos creados con los puntos de corte proporcionados.</p>
+<p>Esta es mi función:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>discretize <span class="ot">&lt;-</span> <span class="cf">function</span>(x, cut.points) {</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  puntos_de_corte <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">unlist</span>(cut.points))</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="co"># Inicializar el vector categórico</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  vector_categ <span class="ot">&lt;-</span> <span class="fu">character</span>(<span class="fu">length</span>(x))</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  <span class="co"># Asignar categorías</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>    <span class="cf">if</span> (x[i] <span class="sc">&lt;=</span> <span class="fu">min</span>(puntos_de_corte)) {</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>      vector_categ[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;I(-infty,&quot;</span>, <span class="fu">min</span>(puntos_de_corte), <span class="st">&quot;]&quot;</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (x[i] <span class="sc">&gt;=</span> <span class="fu">max</span>(puntos_de_corte)) {</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>      vector_categ[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;I[&quot;</span>,<span class="fu">max</span>(puntos_de_corte), <span class="st">&quot;, +infty)&quot;</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>      <span class="co"># Aquí se ajusta el bucle para incluir el punto de corte</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>      <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(puntos_de_corte)) {</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>        <span class="cf">if</span> (x[i] <span class="sc">&lt;=</span> puntos_de_corte[j]) {</span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>          vector_categ[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;I(&quot;</span>, <span class="fu">round</span>(puntos_de_corte[j <span class="sc">-</span> <span class="dv">1</span>], <span class="dv">2</span>), <span class="st">&quot;,&quot;</span>, <span class="fu">round</span>(puntos_de_corte[j], <span class="dv">2</span>), <span class="st">&quot;]&quot;</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>          <span class="cf">break</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>        }</span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>      }</span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a>    }</span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>  }</span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>  vector_categ<span class="ot">&lt;-</span> <span class="fu">as.factor</span>(vector_categ)</span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a>  <span class="fu">return</span>(vector_categ)</span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y este un ejemplo de uso:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">10</span>, <span class="dv">80</span>, <span class="dv">20</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>puntoscorte<span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fl">32.5</span>, <span class="fl">55.0</span>, <span class="fl">77.5</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="fu">discretize</span>(a, puntoscorte)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; [1] I[77.5, +infty) I(32.5,55]      I(55,77.5]      I(-infty,32.5] </span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; [5] I[77.5, +infty) I(-infty,32.5] </span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; Levels: I(-infty,32.5] I(32.5,55] I(55,77.5] I[77.5, +infty)</span></span></code></pre></div>
+<p>Como vemos, nos ha devuelto un vector de clase factor después de
+asignar su correspondiente intervalo a cada elemento y como se puede
+apreciar los niveles o intervalos que ha creado la función coinciden con
+los puntos de corte que le hemos proporcionado.</p>
+<p>##Estandarización La estandarización es un proceso estadístico que
+transforma los datos para que tengan una media de cero y una desviación
+estándar de uno. Esto es especialmente útil en el análisis de datos, ya
+que permite que diferentes variables con diferentes escalas o unidades
+sean comparables.</p>
+<p>Se calcula de la siguiente manera:</p>
+<p><span class="math display">\[
+z_i=\frac{x_i-\mu}{\sigma}
+\]</span> donde - <span class="math inline">\(z\)</span> es el valor
+estandarizado, - <span class="math inline">\(x\)</span> es el valor
+original, - <span class="math inline">\(\mu\)</span> es la media del
+dataset, y - <span class="math inline">\(\sigma\)</span> es la
+desviación estandar.</p>
+<p>Por lo tanto mi función para estandarizar un vector numérico es la
+siguiente:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>estandar <span class="ot">&lt;-</span> <span class="cf">function</span>(v) {</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(v)) {</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Error: El vector no es numérico.&quot;</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  }</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  v_est <span class="ot">&lt;-</span> (v<span class="sc">-</span><span class="fu">mean</span>(v))<span class="sc">/</span><span class="fu">sd</span>(v)</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="fu">return</span>(v_est)</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y un ejemplo de su uso:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">estandar</span>(vector)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; [1] -1.2649111 -0.6324555  0.0000000  0.6324555  1.2649111</span></span></code></pre></div>
+<p>Como vemos me devuelve un vector numérico con los valores
+estandarizados.</p>
+<p>En el análisis de datos nos interesa poder estandarizar todo el
+dataset por lo que también he creado una función que me permite
+estandarizar todas las variables (columnas) de un data frame
+numérico.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>estandar_df <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  df_estandar <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">apply</span>(df, <span class="at">MARGIN=</span><span class="dv">2</span>, <span class="at">FUN=</span>estandar))</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">return</span>(df_estandar)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>Ejemplo de su uso:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">columna1 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="at">columna2 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">45</span>),</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="at">columna3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>))</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="fu">estandar_df</span>(df)</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt;     columna1   columna2   columna3</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; 1 -1.2649111 -1.2649111 -1.2649111</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; 2 -0.6324555 -0.6324555 -0.6324555</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; 3  0.0000000  0.0000000  0.0000000</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; 4  0.6324555  0.6324555  0.6324555</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; 5  1.2649111  1.2649111  1.2649111</span></span></code></pre></div>
+<p>Como vemos, me devuelve un data frame de clase numérico con todos los
+valores estandarizados.</p>
+<p>##Normalización La normalización es una técnica de preprocesamiento
+de datos que se usa para escalar los valores de una variable numérica de
+un dataset a un rango específico, generalmente entre 0 y 1. Esto ayuda a
+que los valores de una variable no dominen a otras cuando se realizan
+análisis que involucran múltiples variables, como en algoritmos de
+machine learning o análisis de datos.</p>
+<p>Se calcula de la siguiente manera: <span class="math display">\[
+x_i&#39;=\frac{x_i-\min(X)}{\max(X)-\min(X)}
+\]</span> donde <span class="math inline">\(x_i&#39;\)</span> es el
+valor normalizado, <span class="math inline">\(x_i\)</span> es el valor
+original <span class="math inline">\(\min(X)\)</span> es el mínimo de la
+variable <span class="math inline">\(X\)</span> en el conjunto de
+dataset, y <span class="math inline">\(\max(X)\)</span> es el máximo de
+la variable <span class="math inline">\(X\)</span> en el conjunto de
+dataset.</p>
+<p>Por lo tanto mi función es la siguiente para vectores numéricos:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>norm <span class="ot">&lt;-</span> <span class="cf">function</span>(v) {</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(v)) {</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Error: El vector no es numérico.&quot;</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  }</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  v_norm <span class="ot">&lt;-</span> (v<span class="sc">-</span><span class="fu">min</span>(v))<span class="sc">/</span>(<span class="fu">max</span>(v)<span class="sc">-</span><span class="fu">min</span>(v))</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  <span class="fu">return</span>(v_norm)</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y el ejemplo de uso:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="fu">norm</span>(vector)</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.00 0.25 0.50 0.75 1.00</span></span></code></pre></div>
+<p>Como vemos nos devuelve un vector numérico con los valores
+normalizados.</p>
+<p>En el análisis de datos nos interesa poder normalizar todo el dataset
+por lo que también he creado una función que me permite normalizar todas
+las variables (columnas) de un data frame numérico.</p>
+<p>Esta es la función:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>norm_df <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  df_norm <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">apply</span>(df, <span class="at">MARGIN=</span><span class="dv">2</span>, <span class="at">FUN=</span>norm))</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="fu">return</span>(df_norm)</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y este el ejemplo de uso:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">columna1 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="at">columna2 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">45</span>),</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="at">columna3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>))</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="fu">norm_df</span>(df)</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="co">#&gt;   columna1 columna2 columna3</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt; 1     0.00     0.00     0.00</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt; 2     0.25     0.25     0.25</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt; 3     0.50     0.50     0.50</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt; 4     0.75     0.75     0.75</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt; 5     1.00     1.00     1.00</span></span></code></pre></div>
+<p>Como vemos me devuelve un data frame numérico con los valores
+normalizados.</p>
+<p>##Varianza La varianza es una medida estadística que indica cuánto se
+dispersan los valores de un conjunto de datos respecto a su media. En
+otras palabras, mide el grado de variabilidad de los datos, mostrando
+cuánto se desvían, en promedio, los datos individuales respecto al valor
+promedio del conjunto.</p>
+<p>La varianza ayuda a entender la dispersión de los datos. Un valor de
+varianza alto indica que los datos están muy dispersos respecto a la
+media, mientras que un valor bajo indica que los datos están más
+concentrados alrededor de la media.</p>
+<p>Se calcula de la siguiente manera: <span class="math display">\[
+s^2=\frac{1}{n-1}\sum_{i=1}^{n} (x_i-\bar x)^2
+\]</span> donde <span class="math inline">\(s^2\)</span> es la varianza,
+<span class="math inline">\(x_i\)</span> es el valor original, <span class="math inline">\(\bar x\)</span> es la media de la muestra, y <span class="math inline">\(n\)</span> es el tamaño de la muestra.</p>
+<p>Por lo que mi función es:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>var_vector <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;Error: El vector no es numérico.&quot;</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  }</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>  <span class="co">#calcular la media</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>  media <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>  <span class="co">#restar la media con cada elemento</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>  ken_media <span class="ot">&lt;-</span> x<span class="sc">-</span>media</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a>  <span class="co">#calcular la varianza</span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a>  varianza <span class="ot">&lt;-</span> <span class="fu">sum</span>(ken_media<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="fu">length</span>(x)<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a>  <span class="fu">return</span>(varianza)</span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y el ejemplo de uso:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">var_vector</span>(vector)</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; [1] 250</span></span></code></pre></div>
+<p>Y como vemos nos devuelvo un valor numérico que indica la varianza de
+esa variable numérica.</p>
+<p>En el análisis de datos nos interesa poder calcular la varianza de
+todo el dataset por lo que también he creado una función que me permite
+calcular la varianza de todas las variables (columnas) de un data frame
+numérico.</p>
+<p>Esta sería la función:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="cf">function</span>(x){ <span class="co">#x es una matriz/df</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(x)) {</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x[,i])) {</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>      <span class="fu">stop</span>(<span class="st">&quot;Error: La matriz no es numérica.&quot;</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>    }</span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>  }</span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>  </span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>  nrow<span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a>  ncol <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a>  <span class="co">#calcular la media de cada columna (nos devuelve un vector)</span></span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a>  mean_col <span class="ot">&lt;-</span> <span class="fu">apply</span>(x, <span class="at">MARGIN=</span><span class="dv">2</span>, <span class="at">FUN=</span>mean) <span class="co">#nos devuelve vector de medias de cada columna</span></span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a>  <span class="co">#restar la media de cada columna a cada elemento de esa columna</span></span>
+<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a>  ken_media <span class="ot">&lt;-</span> <span class="fu">sweep</span>(x, <span class="at">MARGIN=</span><span class="dv">2</span>, mean_col, <span class="at">FUN=</span><span class="st">&quot;-&quot;</span>)</span>
+<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a></span>
+<span id="cb21-17"><a href="#cb21-17" tabindex="-1"></a>  <span class="co">#calcular la varianza</span></span>
+<span id="cb21-18"><a href="#cb21-18" tabindex="-1"></a>  var <span class="ot">&lt;-</span> <span class="fu">colSums</span>(ken_media<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(nrow<span class="dv">-1</span>)</span>
+<span id="cb21-19"><a href="#cb21-19" tabindex="-1"></a></span>
+<span id="cb21-20"><a href="#cb21-20" tabindex="-1"></a>  <span class="fu">return</span>(var)</span>
+<span id="cb21-21"><a href="#cb21-21" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y este el ejemplo de uso:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">columna1 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="at">columna2 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">45</span>),</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="at">columna3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>))</span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="fu">var</span>(df)</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt; columna1 columna2 columna3 </span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt;      250      250       10</span></span></code></pre></div>
+<p>Como vemos nos devuelve un vector numérico con la varianza de cada
+una de las columnas (variables) del data frame.</p>
+<p>##Covarianza</p>
+<p>La covarianza es una medida estadística que indica la relación y el
+grado de cambio conjunto entre dos variables aleatorias. En términos
+simples, nos dice cómo se mueven juntas dos variables: si tienden a
+aumentar o disminuir juntas, o si una aumenta mientras la otra
+disminuye. Lo que viene a decir que es la medida de dependencia lineal
+entre dos variables cuantitativas. Si tenemos dos variable <span class="math inline">\(\textbf{x}\)</span> e <span class="math inline">\(\textbf{y}\)</span> la covarianza entre estas dos
+variables se calcularía de la siguiente manera:</p>
+<p><span class="math display">\[
+s_{xy}=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar x)(y_i-\bar y)
+\]</span> donde <span class="math inline">\(s_{xy}\)</span> es la
+covarianza entre <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span>, <span class="math inline">\(x_i\)</span> es uno de los valores originales de
+la variable <span class="math inline">\(X\)</span>, <span class="math inline">\(\bar x\)</span> es la media de la muestra de la
+variable <span class="math inline">\(X\)</span>, <span class="math inline">\(y_i\)</span> es uno de los valores originales de
+la variable <span class="math inline">\(Y\)</span>, <span class="math inline">\(\bar y\)</span> es la media de la muestra de la
+variable <span class="math inline">\(Y\)</span>.</p>
+<p>Si la covarianza es mayor que cero, indica que ambas variables
+tienden a moverse en la misma dirección. Es decir, cuando una variable
+aumenta, la otra también tiende a aumentar, y lo mismo ocurre si
+disminuyen.</p>
+<p>Si la covarianza es menor que cero, significa que las variables
+tienden a moverse en direcciones opuestas. Cuando una variable aumenta,
+la otra tiende a disminuir.</p>
+<p>Si la covarianza es cero o cercana a cero, indica que no hay una
+relación lineal clara entre las dos variables.</p>
+<p>Para calcular la covarianza he creado una función que toma un data
+frame de clase numérico y calcula la covarianza entre las columnas
+(variables) del data frame. Lo que nos devuelve es una matriz de
+varianza-covarianza. Las varianzas en la diagonal de la matriz y las
+covarianzas en el resto de la matriz. Por ejemplo, el elemento <span class="math inline">\(s_{12}\)</span> de la matriz será la covarianza
+entre las variables 1 y 2.</p>
+<p>Esta es la función que he creado para ello:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>cov_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { <span class="co">#nos devuelve una matriz de varianza-covarianza</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  n_col <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  n_row<span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>  <span class="co">#calcular la media de cada columna (nos devuelve un vector)</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>  mean_col <span class="ot">&lt;-</span> <span class="fu">apply</span>(x, <span class="at">MARGIN=</span><span class="dv">2</span>, <span class="at">FUN=</span>mean) <span class="co">#nos devuelve vector de medias de cada columna</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>  <span class="co">#restar la media de cada columna a cada elemento de esa columna</span></span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>  ken_media <span class="ot">&lt;-</span> <span class="fu">sweep</span>(x, <span class="at">MARGIN=</span><span class="dv">2</span>, mean_col, <span class="at">FUN=</span><span class="st">&quot;-&quot;</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a>  matriz_covarianzas <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> n_col, <span class="at">ncol =</span> n_col)  <span class="co"># Inicializar matriz</span></span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_col) {</span>
+<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_col) {</span>
+<span id="cb23-15"><a href="#cb23-15" tabindex="-1"></a>      matriz_covarianzas[i, j] <span class="ot">&lt;-</span> <span class="fu">sum</span>(ken_media[,i]<span class="sc">*</span>ken_media[,j])<span class="sc">/</span>(n_row<span class="dv">-1</span>) <span class="co">#calcular la covarianza</span></span>
+<span id="cb23-16"><a href="#cb23-16" tabindex="-1"></a>    }</span>
+<span id="cb23-17"><a href="#cb23-17" tabindex="-1"></a>  }</span>
+<span id="cb23-18"><a href="#cb23-18" tabindex="-1"></a>  <span class="fu">return</span>(matriz_covarianzas)</span>
+<span id="cb23-19"><a href="#cb23-19" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y el ejemplo de uso sería este:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">var1 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="at">var2 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">45</span>),</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="at">var3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>))</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="fu">cov_fun</span>(df)</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="co">#&gt; [1,]  250  250   50</span></span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a><span class="co">#&gt; [2,]  250  250   50</span></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="co">#&gt; [3,]   50   50   10</span></span></code></pre></div>
+<p>##Correlación</p>
+<p>Otra medida estadística es la correlación la cual indica la relación
+y el grado de asociación lineal entre dos variables. A diferencia de la
+covarianza, la correlación está normalizada, lo que permite comparar
+relaciones de variables que pueden tener diferentes escalas o
+unidades.</p>
+<p>Se calcula de la siguiente manera: <span class="math display">\[
+r_{xy}=\frac{s_{xy}}{\sigma_x \sigma_y}
+\]</span> donde <span class="math inline">\(r_{xy}\)</span> es la
+correlación entre las variables <span class="math inline">\(x\)</span> e
+<span class="math inline">\(y\)</span>, <span class="math inline">\(s_{xy}\)</span> es la covarianza entre las
+variables <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span>, <span class="math inline">\(\sigma_x\)</span> es la desviación estandar de la
+variable <span class="math inline">\(x\)</span>, <span class="math inline">\(\sigma_y\)</span> es la desviación estandar de la
+variable <span class="math inline">\(y\)</span></p>
+<p>Esta función utiliza internamente la función de la covarianza para
+calcular la matriz de varianzas-covarianzas por lo que tenemos toda la
+información necesaria para calcular la correlación en esa matriz ya que
+la desviación estandar de una variable y la varianza se relacionan de la
+siguiente manera:</p>
+<p><span class="math display">\[
+\sigma_x =\sqrt{s_x^2}
+\]</span> donde <span class="math inline">\(\sigma_x\)</span> es la
+desviación estandar de la variable <span class="math inline">\(x\)</span> y <span class="math inline">\(s_x^2\)</span> es la varianza de la variable <span class="math inline">\(x\)</span></p>
+<p>Por lo tanto utilizamos la matriz de varianzas-covarianzas y
+extraemos las varianzas y covarianzas para calcular en cada caso la
+correlación.</p>
+<p>La función que he creado toma un data frame de clase numérico para
+hacer el cálculo y es la siguiente:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>cor_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(matriz_dat) {</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">ncol</span>(matriz_dat)  <span class="co"># Número de variables</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>  matriz_cov <span class="ot">&lt;-</span> <span class="fu">cov_fun</span>(matriz_dat)</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>  matriz_correlaciones <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> n, <span class="at">ncol =</span> n)  <span class="co"># Inicializar matriz de correlaciones</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>      <span class="co"># Extraer la covarianza y las varianzas</span></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>      cov_xy <span class="ot">&lt;-</span> matriz_cov[i, j]                   <span class="co"># Cov(X, Y)</span></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>      var_x <span class="ot">&lt;-</span> matriz_cov[i, i]                    <span class="co"># Var(X)</span></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>      var_y <span class="ot">&lt;-</span> matriz_cov[j, j]                    <span class="co"># Var(Y)</span></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>      <span class="co"># Calcular la correlación</span></span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>      matriz_correlaciones[i, j] <span class="ot">&lt;-</span> cov_xy <span class="sc">/</span> <span class="fu">sqrt</span>(var_x <span class="sc">*</span> var_y)</span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>    }</span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a>  }</span>
+<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" tabindex="-1"></a>  <span class="fu">return</span>(matriz_correlaciones)</span>
+<span id="cb25-19"><a href="#cb25-19" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y el ejemplo de uso:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">var1 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="at">var2 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">24</span>, <span class="dv">35</span>, <span class="dv">45</span>),</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="at">var3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>))</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="fu">cor_fun</span>(df)</span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&gt;           [,1]      [,2]      [,3]</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; [1,] 1.0000000 0.9996002 0.9938837</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co">#&gt; [2,] 0.9996002 1.0000000 0.9923825</span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="co">#&gt; [3,] 0.9938837 0.9923825 1.0000000</span></span></code></pre></div>
+<p>La función nos devuelve una matriz de correlaciones de clase
+numérica.</p>
+<p>Si la correlación es mayor que 0, significa que ambas variables
+tienden a moverse en la misma dirección. Si la correlación es menor que
+0, indica que las variables tienden a moverse en direcciones opuestas.
+Si la correlación está cerca del 0 significa que no hay una relación
+lineal clara entre las variables. Y finalemente si la correlación es -1
+o +1 indica una relación lineal perfecta. Si la correlación es +1, ambas
+variables aumentan o disminuyen en proporción exacta. Si es -1, una
+variable aumenta mientras la otra disminuye en proporción exacta.</p>
+<p>Como vemos en el ejemplo, las correlaciones en la diagonal son +1
+porque en la diagonal tenemos las correlaciones de una variable consigo
+misma y es por eso que la correlación es perfecta.</p>
+<p>##Entropía La entropía es una medida de la incertidumbre o desorden
+en un sistema o conjunto de datos. En estadística y teoría de la
+información, mide la cantidad de información o incertidumbre presente en
+un conjunto de posibles resultados.</p>
+<p>Se calcula de la siguiente manera:</p>
+<p><span class="math display">\[
+H(X)=\sum_{i=1}^{n}-p_ilog_2(p_i)
+\]</span> donde <span class="math inline">\(H(X)\)</span> es la entropía
+de la variable <span class="math inline">\(X\)</span>, <span class="math inline">\(p_i\)</span> es la probabilidad estimada para cada
+valor posible en esa variable.</p>
+<p>Esta medida se utiliza con variables categóricas por lo que la
+función que he creado toma un vector de clase factor y nos devuelve un
+valor numérico que representa la entropía de esa variable.</p>
+<p>Esta es la función:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>entropy <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { <span class="co"># x es un factor</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  niveles <span class="ot">&lt;-</span> <span class="fu">levels</span>(x)</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">c</span>() <span class="co">#vector de probabilidades</span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(niveles)) {</span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>    counter <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>      <span class="cf">if</span> (niveles[i]<span class="sc">==</span>x[j]) {</span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>        counter <span class="ot">&lt;-</span> counter <span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>      }</span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a>    }</span>
+<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a>    p <span class="ot">&lt;-</span> <span class="fu">c</span>(p, counter<span class="sc">/</span><span class="fu">length</span>(x))</span>
+<span id="cb27-12"><a href="#cb27-12" tabindex="-1"></a>  }</span>
+<span id="cb27-13"><a href="#cb27-13" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" tabindex="-1"></a>  H<span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb27-15"><a href="#cb27-15" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(p)) {</span>
+<span id="cb27-16"><a href="#cb27-16" tabindex="-1"></a>    H <span class="ot">&lt;-</span> H <span class="sc">-</span>p[i]<span class="sc">*</span><span class="fu">log2</span>(p[i]<span class="sc">+</span><span class="fl">1e-10</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" tabindex="-1"></a>  }</span>
+<span id="cb27-18"><a href="#cb27-18" tabindex="-1"></a>  <span class="fu">return</span>(H)</span>
+<span id="cb27-19"><a href="#cb27-19" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y este su implementación:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>data_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>))</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">entropy</span>(data_factor)</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="co">#&gt; [1] 1.921928</span></span></code></pre></div>
+<p>Si la entropía es alta indica alta incertidumbre y desorden, es
+decir, un sistema en el que los resultados son muy variados y es difícil
+predecir qué ocurrirá. Por lo contrario, si la entropía es baja indica
+que el sistema es más predecible y tiene menos incertidumbre.</p>
+<p>En el análisis de datos nos interesa poder calcular la entropía de
+todo el dataset por lo que también he creado una función que me permite
+calcular la entropía de todas las variables (columnas) de un data frame
+de clase factor.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>entropy_df <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { <span class="co">#x es un data frame</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  v_entropy <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x, <span class="at">FUN=</span>entropy)</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  <span class="fu">return</span>(v_entropy)</span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y el ejemplo:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>data_frame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Color =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Azul&quot;</span>, <span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Verde&quot;</span>)),</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="at">Forma =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;Círculo&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Círculo&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Círculo&quot;</span>)),</span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>Tamaño <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;Grande&quot;</span>, <span class="st">&quot;Pequeño&quot;</span>, <span class="st">&quot;Pequeño&quot;</span>, <span class="st">&quot;Grande&quot;</span>, <span class="st">&quot;Grande&quot;</span>, <span class="st">&quot;Pequeño&quot;</span>)))</span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="fu">entropy_df</span>(data_frame)</span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a><span class="co">#&gt;    Color    Forma   Tamaño </span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a><span class="co">#&gt; 1.459148 1.000000 1.000000</span></span></code></pre></div>
+<p>Nos devuelve, en este caso, un vector numérico con el valor de la
+entropía de cada variable.</p>
+<p>De la misma manera, podría ser útil poder calcular la entropía
+normalizada ya que es una versión de la entropía que se ajusta para que
+su valor esté dentro de un rango estándar, típicamente entre 0 y 1. Esto
+es especialmente útil para comparar la incertidumbre relativa entre
+diferentes conjuntos de datos o sistemas con distintas distribuciones de
+probabilidad, ya que la entropía sin normalizar puede variar ampliamente
+según el número de posibles resultados y sus probabilidades.</p>
+<p>La entropía normalizada se calcula de la siguiente manera:</p>
+<p><span class="math display">\[
+H_{norm}=\frac{H(X)}{H_{max}}=\frac{H(X)}{log_2(n)}
+\]</span> donde <span class="math inline">\(H_{norm}\)</span> es la
+entropía normalizada, <span class="math inline">\(H(X)\)</span> es la
+entropía de la variable <span class="math inline">\(X\)</span> y <span class="math inline">\(n\)</span> es el número total de resultados
+posibles.</p>
+<p>Por lo tanto, la función que he creado toma un vector de clase factor
+y devuelve un valor numérico que representa la entropía normalizada de
+esa variable.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>norm_entropy <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { <span class="co">#x es un factor</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>  H <span class="ot">&lt;-</span> <span class="fu">entropy</span>(x)</span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>  H_norm <span class="ot">&lt;-</span> H<span class="sc">/</span><span class="fu">log2</span>(n)</span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>  <span class="fu">return</span>(H_norm)</span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>}</span></code></pre></div>
+<p>Un ejemplo es:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>data_factor <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>))</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="fu">norm_entropy</span>(data_factor)</span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.578558</span></span></code></pre></div>
+<p>Si <span class="math inline">\(H_{norm}=1\)</span> indica que el
+sistema tiene la máxima incertidumbre posible. Esto significa que todos
+los resultados son igualmente probables, y no hay ninguna estructura o
+patrón discernible.</p>
+<p>Si <span class="math inline">\(H_{norm}=0\)</span> indica que el
+sistema es completamente predecible (por ejemplo, una probabilidad de 1
+para un único resultado).</p>
+<p>Y si <span class="math inline">\(0&lt;H_{norm}&lt;1\)</span> indica
+que el sistema tiene un nivel intermedio de incertidumbre o
+desorden.</p>
+<p>De la misma manera que con la entropía, en el análisis de datos nos
+interesa poder calcular la entropía normalizada de todo el dataset por
+lo que también he creado una función que me permite calcular la entropía
+normalizada de todas las variables (columnas) de un data frame de clase
+factor.</p>
+<p>Esta será la función:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>norm_entropy_df <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  df_entropy_norm <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(df, <span class="at">FUN=</span>norm_entropy))</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>  <span class="fu">return</span>(df_entropy_norm)</span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y este el ejemplo de uso:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>data_frame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Color =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Azul&quot;</span>, <span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Verde&quot;</span>)),</span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="at">Forma =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;Círculo&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Círculo&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Círculo&quot;</span>)),</span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>Tamaño <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;Grande&quot;</span>, <span class="st">&quot;Pequeño&quot;</span>, <span class="st">&quot;Pequeño&quot;</span>, <span class="st">&quot;Grande&quot;</span>, <span class="st">&quot;Grande&quot;</span>, <span class="st">&quot;Pequeño&quot;</span>)))</span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="fu">norm_entropy_df</span>(data_frame)</span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="co">#&gt; [1] 0.5644755 0.3868528 0.3868528</span></span></code></pre></div>
+<p>Nos devuelve un vector numérico con la entropía normalizada de todas
+las variables.</p>
+<p>Para terminar con la sección de la entropía, he creado una última
+función que puede ser útil a la hora de gestionar los datos. La función
+que mostraré a continuación, sirve para filtrar un dataset según el
+valor de entropía de sus variables. Es decir, dado un data frame de
+clase factor y un valor numérico que represente la entropía umbral, esta
+función nos devuelve el data frame de clase factor sólamente con
+aquellas variables que cumplan con tener la entropía mayor que el valor
+umbral. Las variables (columnas) que no cumplan con ese requisito se
+eliminarán.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>filtro_entropia <span class="ot">&lt;-</span> <span class="cf">function</span>(x, H_umbral) {<span class="co">#x es un data set y H_umbral es el valor umbral de la entropia</span></span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>  entropy_x <span class="ot">&lt;-</span> <span class="fu">entropy_df</span>(x) <span class="co">#calcula las entropias de cada columna y nos devuelve un vector</span></span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>  n_col <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a>  <span class="co">#ver que columnas estan por encima del umbral</span></span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a>  true_cols <span class="ot">&lt;-</span> entropy_x <span class="sc">&gt;</span> H_umbral <span class="co">#nos devuelve un vector logico: TRUE si es mas grande y FALSE si no</span></span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a>  <span class="co">#conseguir los indices de los TRUE</span></span>
+<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a>  indices <span class="ot">&lt;-</span> <span class="fu">c</span>() <span class="co">#inicializar el vector de los indices</span></span>
+<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_col) {</span>
+<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a>    <span class="cf">if</span> (true_cols[i]<span class="sc">==</span><span class="cn">TRUE</span>) {</span>
+<span id="cb35-12"><a href="#cb35-12" tabindex="-1"></a>      indices <span class="ot">&lt;-</span> <span class="fu">c</span>(indices, i)</span>
+<span id="cb35-13"><a href="#cb35-13" tabindex="-1"></a>    }</span>
+<span id="cb35-14"><a href="#cb35-14" tabindex="-1"></a>  }</span>
+<span id="cb35-15"><a href="#cb35-15" tabindex="-1"></a></span>
+<span id="cb35-16"><a href="#cb35-16" tabindex="-1"></a>  <span class="co">#filtrar el data set</span></span>
+<span id="cb35-17"><a href="#cb35-17" tabindex="-1"></a>  x_filtrado <span class="ot">&lt;-</span> x[,indices]</span>
+<span id="cb35-18"><a href="#cb35-18" tabindex="-1"></a></span>
+<span id="cb35-19"><a href="#cb35-19" tabindex="-1"></a>  <span class="fu">return</span>(x_filtrado)</span>
+<span id="cb35-20"><a href="#cb35-20" tabindex="-1"></a>}</span></code></pre></div>
+<p>Ejemplo de uso:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>data_frame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Color =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Azul&quot;</span>, <span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Verde&quot;</span>)),</span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="at">Forma =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;Círculo&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Círculo&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Círculo&quot;</span>)),</span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a>Tamaño <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;Grande&quot;</span>, <span class="st">&quot;Pequeño&quot;</span>, <span class="st">&quot;Pequeño&quot;</span>, <span class="st">&quot;Grande&quot;</span>, <span class="st">&quot;Grande&quot;</span>, <span class="st">&quot;Pequeño&quot;</span>)))</span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a><span class="fu">filtro_entropia</span>(data_frame, <span class="dv">1</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a><span class="co">#&gt; [1] Rojo  Verde Azul  Rojo  Verde Verde</span></span>
+<span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a><span class="co">#&gt; Levels: Azul Rojo Verde</span></span></code></pre></div>
+<p>Nos devuelve un data frame de clase factor sólamente con las
+variables que cumplen el requisito.</p>
+<p>Una función que elimina las variables con una entropía por debajo de
+un umbral dado en un dataset puede ser útil para selección de
+características en el análisis de datos y en el aprendizaje automático.
+En particular, al aplicar un filtro de entropía se pueden eliminar
+variables que contienen poca información útil, reduciendo así la
+complejidad y mejorando la eficiencia del modelo.</p>
+<p>##Información mutua La información mutua es una medida de dependencia
+entre dos variables aleatorias, que indica cuánta información comparte
+una variable con otra. En otras palabras, muestra cuánta “incertidumbre”
+sobre una variable es reducida cuando conocemos la otra variable. Es una
+herramienta muy útil en análisis de datos y aprendizaje automático para
+evaluar la relación entre variables, especialmente en la selección de
+características.</p>
+<p>Se calcula de la siguiente manera: <span class="math display">\[
+I(X;Y)=\sum_{y \in Y} \sum_{x \in X} p(x,y)log(\frac{p(x,y)}{p(x)p(y)})
+\]</span> donde <span class="math inline">\(I(X;Y)\)</span> es la
+información mutua entre la variable <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span>, <span class="math inline">\(p(x,y)\)</span> es la probabilidad conjunta de los
+valores <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span> <span class="math inline">\(p(x)\)</span> es la probabilidad marginal de <span class="math inline">\(X\)</span> y <span class="math inline">\(p(y)\)</span> es la probabilidad marginal de <span class="math inline">\(Y\)</span>.</p>
+<p>Pero, esta expresión se puede modificar para que la información mutua
+se escriba en función de la entropía de las variables. De esta
+manera:</p>
+<p><span class="math display">\[
+I(X;Y)=H(X)+H(Y)-H(X,Y)
+\]</span> donde <span class="math inline">\(I(X;Y)\)</span> es la
+información mutua entre la variable <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span>, <span class="math inline">\(H(X)\)</span> es la entropía de la variable <span class="math inline">\(X\)</span>, <span class="math inline">\(H(Y)\)</span> es la entropía de la variable <span class="math inline">\(Y\)</span> y <span class="math inline">\(H(X,Y)=-\sum_{y \in Y} \sum_{x \in X}
+p(x,y)log(p(x,y))\)</span> es la entropía conjunta de <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> que mide la incertidumbre de ambas
+variables consideradas juntas.</p>
+<p>Ya que anteriormente hemos creado las funciones para calcular la
+entropía de distintas variables, en esta función vamos a aprovecharlas y
+usarlas internamente para calcular la información mutua. Por lo que esta
+función toma de entrada un data frame de clase factor, calcula las
+entropías de cada variable con la función que he enseñado anteriormente
+y luego calcula <span class="math inline">\(H(X,Y)\)</span> para luego
+poder calcular la información mutua.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>info_mutua <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="co">#correlación para variables categoricas x es un data frame / matriz categorica de factores</span></span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>  <span class="co">#info mutua se calcula de la siguiente manera</span></span>
+<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a>  <span class="co">#I(X;Y)= sum_xsum_y p(x, y)log(p(x, y)/p(x)p(y))</span></span>
+<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a>  <span class="co">#donde X e Y son dos variables o columnas de un data set</span></span>
+<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a>  <span class="co"># o si lo expresamos mediante entropia</span></span>
+<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a>  <span class="co">#I(X;Y)= H(X)+H(Y)-H(X,Y)</span></span>
+<span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a>  <span class="co">#donde H(x, y)= -sum_xsum_y p(x, y)log(p(x, y))</span></span>
+<span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a>  n_col <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x) <span class="co"># número de variables</span></span>
+<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a>  n_row <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a>  matriz_infomutua <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow=</span>n_col, <span class="at">ncol=</span>n_col) <span class="co"># inicializamos la matriz de resultados</span></span>
+<span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" tabindex="-1"></a>  <span class="co"># Calculamos la entropía de cada variable</span></span>
+<span id="cb37-14"><a href="#cb37-14" tabindex="-1"></a>  H_variable <span class="ot">&lt;-</span> <span class="fu">entropy_df</span>(x) <span class="co"># nos devuelve un vector de entropías de cada columna</span></span>
+<span id="cb37-15"><a href="#cb37-15" tabindex="-1"></a></span>
+<span id="cb37-16"><a href="#cb37-16" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_col) {</span>
+<span id="cb37-17"><a href="#cb37-17" tabindex="-1"></a>    categ1 <span class="ot">&lt;-</span> <span class="fu">levels</span>(x[[i]]) <span class="co"># los niveles o categorías en la columna i</span></span>
+<span id="cb37-18"><a href="#cb37-18" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_col) {</span>
+<span id="cb37-19"><a href="#cb37-19" tabindex="-1"></a>      categ2 <span class="ot">&lt;-</span> <span class="fu">levels</span>(x[[j]]) <span class="co"># los niveles o categorías en la columna j</span></span>
+<span id="cb37-20"><a href="#cb37-20" tabindex="-1"></a></span>
+<span id="cb37-21"><a href="#cb37-21" tabindex="-1"></a>      <span class="co"># Inicializar la matriz de probabilidades conjuntas</span></span>
+<span id="cb37-22"><a href="#cb37-22" tabindex="-1"></a>      p_x_y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow=</span><span class="fu">length</span>(categ1), <span class="at">ncol=</span><span class="fu">length</span>(categ2))</span>
+<span id="cb37-23"><a href="#cb37-23" tabindex="-1"></a></span>
+<span id="cb37-24"><a href="#cb37-24" tabindex="-1"></a>      <span class="co"># Contar las ocurrencias de cada combinación de categoría</span></span>
+<span id="cb37-25"><a href="#cb37-25" tabindex="-1"></a>      <span class="cf">for</span> (m <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_row) {</span>
+<span id="cb37-26"><a href="#cb37-26" tabindex="-1"></a>        cat1_index <span class="ot">&lt;-</span> <span class="fu">which</span>(categ1 <span class="sc">==</span> x[m, i])  <span class="co"># Índice de la categoría en la columna i (un vector con el indice de la categoria en cada elemento)</span></span>
+<span id="cb37-27"><a href="#cb37-27" tabindex="-1"></a>        cat2_index <span class="ot">&lt;-</span> <span class="fu">which</span>(categ2 <span class="sc">==</span> x[m, j])  <span class="co"># Índice de la categoría en la columna j</span></span>
+<span id="cb37-28"><a href="#cb37-28" tabindex="-1"></a></span>
+<span id="cb37-29"><a href="#cb37-29" tabindex="-1"></a>        <span class="co"># Asegurarse de que ambos índices sean válidos</span></span>
+<span id="cb37-30"><a href="#cb37-30" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">length</span>(cat1_index) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(cat2_index) <span class="sc">&gt;</span> <span class="dv">0</span>) {<span class="co">#compara no todos con todos si no el primer elemento con el primero el segundo con el segundo etc.</span></span>
+<span id="cb37-31"><a href="#cb37-31" tabindex="-1"></a>          p_x_y[cat1_index, cat2_index] <span class="ot">&lt;-</span> p_x_y[cat1_index, cat2_index] <span class="sc">+</span> <span class="dv">1</span> <span class="co"># sumamos en cada sitio</span></span>
+<span id="cb37-32"><a href="#cb37-32" tabindex="-1"></a>        }</span>
+<span id="cb37-33"><a href="#cb37-33" tabindex="-1"></a>      }</span>
+<span id="cb37-34"><a href="#cb37-34" tabindex="-1"></a></span>
+<span id="cb37-35"><a href="#cb37-35" tabindex="-1"></a>      <span class="co"># Calcular las probabilidades conjuntas</span></span>
+<span id="cb37-36"><a href="#cb37-36" tabindex="-1"></a>      p_x_y <span class="ot">&lt;-</span> p_x_y <span class="sc">/</span> n_row</span>
+<span id="cb37-37"><a href="#cb37-37" tabindex="-1"></a></span>
+<span id="cb37-38"><a href="#cb37-38" tabindex="-1"></a>      <span class="co"># Calcular H(X, Y) usando probabilidad conjunta</span></span>
+<span id="cb37-39"><a href="#cb37-39" tabindex="-1"></a>      H_XY <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(p_x_y <span class="sc">*</span> <span class="fu">log</span>(p_x_y <span class="sc">+</span> <span class="fl">1e-10</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)  <span class="co"># Sumar una pequeña constante para evitar log(0)</span></span>
+<span id="cb37-40"><a href="#cb37-40" tabindex="-1"></a></span>
+<span id="cb37-41"><a href="#cb37-41" tabindex="-1"></a>      <span class="co"># Calcular I(X; Y) = H(X) + H(Y) - H(X, Y)</span></span>
+<span id="cb37-42"><a href="#cb37-42" tabindex="-1"></a>      </span>
+<span id="cb37-43"><a href="#cb37-43" tabindex="-1"></a>      matriz_infomutua[i, j] <span class="ot">&lt;-</span> H_variable[i] <span class="sc">+</span> H_variable[j] <span class="sc">-</span> H_XY</span>
+<span id="cb37-44"><a href="#cb37-44" tabindex="-1"></a>      </span>
+<span id="cb37-45"><a href="#cb37-45" tabindex="-1"></a>    }</span>
+<span id="cb37-46"><a href="#cb37-46" tabindex="-1"></a>  }</span>
+<span id="cb37-47"><a href="#cb37-47" tabindex="-1"></a></span>
+<span id="cb37-48"><a href="#cb37-48" tabindex="-1"></a>  <span class="fu">return</span>(matriz_infomutua)</span>
+<span id="cb37-49"><a href="#cb37-49" tabindex="-1"></a>}</span></code></pre></div>
+<p>Ejemplo de uso:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="at">Columna_A =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Azul&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Azul&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Verde&quot;</span>)),</span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a><span class="at">Columna_B =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Medio&quot;</span>)),</span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="at">Columna_C =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Medio&quot;</span>)))</span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a><span class="fu">info_mutua</span>(data)</span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a><span class="co">#&gt;          [,1]     [,2]     [,3]</span></span>
+<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a><span class="co">#&gt; [1,] 2.040361 1.216402 1.043115</span></span>
+<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a><span class="co">#&gt; [2,] 1.216402 2.040361 1.389688</span></span>
+<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a><span class="co">#&gt; [3,] 1.043115 1.389688 2.040361</span></span></code></pre></div>
+<p>Nos devuelve una matriz numérica, es decir, la matriz de información
+mutua.</p>
+<p>Si la información mutua es muy alta indica que una variable contiene
+mucha información sobre la otra, es decir, hay una fuerte dependencia o
+relación entre ellas. Y si la información mutua es baja o cercana a 0,
+indica que las variables son casi independientes; saber el valor de una
+variable no aporta mucha información sobre la otra.</p>
+<p>##Area Under Curve (AUC) El AUC (Área bajo la Curva ROC) es una
+métrica ampliamente utilizada para evaluar el rendimiento de modelos de
+clasificación, especialmente cuando se trata de problemas de
+clasificación binaria. AUC significa “Área bajo la Curva” (en inglés,
+“Area Under Curve”) y mide el área bajo la Curva ROC (Receiver Operating
+Characteristic). Esta curva traza la tasa de verdaderos positivos frente
+a la tasa de falsos positivos en diferentes umbrales de decisión del
+modelo.</p>
+<p>Cuanto mayor es el AUC, mejor es el modelo para distinguir entre las
+clases positivas y negativas. Un AUC cercano a 1 indica una buena
+capacidad de discriminación.</p>
+<p>Para calcular el AUC, primero se construye la Curva ROC, y el
+procedimiento es el siguiente. Supongamos que tenemos una matriz de dos
+columnas, la primera, el valor de la variabla a analizar y la segunda,
+la etiqueta o clase asociada a dicho valor. Por simplicidad, asumiremos
+que la etiqueta será de tipo logic, es decir, TRUE o FALSE. El primer
+paso será ordenar las filas de acuerdo al valor de la variable (primera
+columna). A continuación, para un cierto valor de corte definiremos
+todas aquellas filas por encima de ese valor como predichas positivas
+(TRUE) y todas aquellas por debajo como predichas negativas (FALSE).
+Comparando la `predicción’ con la etiqueta real (segunda columna de la
+matriz), podremos caracterizar cada ejemplo (cada fila) como verdadero
+positivo (TP) cuando predicción y etiqueta real sean TRUE, falso
+positivo (FP) cuando la predicción sea TRUE pero la etiqueta real sea
+FALSE, verdadero negativo (TN) si ambas son FALSE y falso negativo (FN)
+si la predicción es FALSE pero la etiqueta real es TRUE. Para cada
+posible valor de corte de la variable tendremos un valor de TP, TN, FP y
+FN. De ellos, se pueden derivar dos valores:</p>
+<ol style="list-style-type: decimal">
+<li><p>La Tasa de Verdaderos Positivos (TPR por sus siglas en inglés):
+<span class="math display">\[
+TPR=\frac{True Positives (TP)}{True Positives (TP) + False Negatives
+(FN)}
+\]</span> donde <span class="math inline">\(TPR\)</span> es la Tasa de
+Verdaderos positivos que representa la proporción de positivos
+correctamente identificados por el modelo, <span class="math inline">\(TP\)</span> es el número de verdaderos positivos
+(cuando la predicción y etiqueta real sean TRUE a la vez) <span class="math inline">\(FN\)</span> es el número de falsos negativos (si
+la predicción es FALSE pero la etiqueta real TRUE).</p></li>
+<li><p>La Tasa de Falsos Positivos (FPR por sus siglas en inglés): <span class="math display">\[
+FPR= \frac{False Positives (FP)}{False Positives(FP)+True Negatives(TN)}
+\]</span> donde <span class="math inline">\(FPR\)</span> es la tasa de
+falsos positivos que indica la proporción de negativos incorrectamente
+clasificados como positivos, <span class="math inline">\(FP\)</span> es
+el número de falsos positivos (cuando la predicción sea TRUE pero la
+etiqueta real sea FALSE), <span class="math inline">\(TN\)</span> es el
+número de verdaderos negativos (si ambas son FALSE).</p></li>
+</ol>
+<p>La Curva ROC se construye trazando la TPR en el eje <span class="math inline">\(y\)</span> y la FPR en el eje <span class="math inline">\(x\)</span>, variando el umbral de decisión desde 0
+hasta 1.</p>
+<p>Finalmente, el AUC es simplemente el área bajo la curva ROC. Se
+calcula integrando el área bajo la curva en el gráfico TPR vs. FPR. En
+la práctica, el AUC se aproxima calculando la suma de los trapecios
+formados bajo la curva ROC.</p>
+<p>La fórmula para hacer la suma de los trapecios es la siguiente: <span class="math display">\[
+Area \approx \sum_{i=0}^{n-1} \frac{y_i+y_{i+1}}{2}(x_{i+1}-x_i)
+\]</span> donde <span class="math inline">\(y_i\)</span> y <span class="math inline">\(y_{i+1}\)</span> son los valores de la función en
+los puntos <span class="math inline">\(x_i\)</span> y <span class="math inline">\(x_{i+1}\)</span> que es la base del trapecio,
+<span class="math inline">\((x_{i+1}-x_i)\)</span> es la distancia entre
+dos puntos consecutivos en el eje <span class="math inline">\(x\)</span>
+que es la altura del trapecio.</p>
+<p>Por lo que, la función que he creado primero toma el data frame y
+analiza si hay una variable binaria de tipo factor en el dataset. Si no
+la hay se para la función y si encuentra una variable binaria, convierte
+la columna binaria a valores lógicos de TRUE o FALSE.</p>
+<p>Después, ordenamos el data frame de menor a mayor según la variable
+numérica y creamos un vector de valores de corte utilizando todos los
+valores únicos de esa variable numérica. Por cada valor de corte,
+hacemos las predicciones y calculamos los TP, TN, FP y FN para poder
+calcular la Tasa de Verdaderos Positivos (TPR) y la Tasa de Falsos
+Positivos (FPR) y guardamos cada par de TPR y FPR para poder luego
+graficarlos utilizando otra función que explicaremos más adelante. Una
+vez que tenemos todos los puntos del ROC calculamos el AUC utilizando la
+regla de la suma de los trapecios.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>AUC <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  <span class="co"># df: primera col --&gt; vector numérico; segunda col --&gt; vector lógico/binario</span></span>
+<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>  </span>
+<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>  <span class="co"># Identificar la columna binaria (la que tiene dos niveles)</span></span>
+<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>  bin_col_index <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">sapply</span>(df, <span class="cf">function</span>(x) <span class="fu">is.factor</span>(x) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(<span class="fu">levels</span>(x)) <span class="sc">==</span> <span class="dv">2</span>))[<span class="dv">1</span>]</span>
+<span id="cb39-6"><a href="#cb39-6" tabindex="-1"></a>  </span>
+<span id="cb39-7"><a href="#cb39-7" tabindex="-1"></a>  <span class="co"># Si no hay una columna binaria, retornar un error</span></span>
+<span id="cb39-8"><a href="#cb39-8" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(bin_col_index)) {</span>
+<span id="cb39-9"><a href="#cb39-9" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;No hay una columna binaria en el dataframe.&quot;</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" tabindex="-1"></a>  }</span>
+<span id="cb39-11"><a href="#cb39-11" tabindex="-1"></a>  </span>
+<span id="cb39-12"><a href="#cb39-12" tabindex="-1"></a>  <span class="co"># Ordenar el data frame de menor a mayor valor de la primera col</span></span>
+<span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a>  df_orden <span class="ot">&lt;-</span> df[<span class="fu">order</span>(df[, <span class="dv">1</span>]), ]</span>
+<span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a>  </span>
+<span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a>  <span class="co"># Convertir la columna binaria a valores lógicos</span></span>
+<span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a>  clase_col <span class="ot">&lt;-</span> df_orden[[bin_col_index]]</span>
+<span id="cb39-17"><a href="#cb39-17" tabindex="-1"></a>  clase_logica <span class="ot">&lt;-</span> <span class="fu">as.logical</span>(<span class="fu">ifelse</span>(clase_col <span class="sc">==</span> <span class="fu">levels</span>(clase_col)[<span class="dv">1</span>], <span class="cn">FALSE</span>, <span class="cn">TRUE</span>))  <span class="co"># Asignar FALSE y TRUE</span></span>
+<span id="cb39-18"><a href="#cb39-18" tabindex="-1"></a>  </span>
+<span id="cb39-19"><a href="#cb39-19" tabindex="-1"></a>  </span>
+<span id="cb39-20"><a href="#cb39-20" tabindex="-1"></a>  </span>
+<span id="cb39-21"><a href="#cb39-21" tabindex="-1"></a>  <span class="co"># Crear un vector de valores de corte (usamos todos los valores únicos de la primera columna)</span></span>
+<span id="cb39-22"><a href="#cb39-22" tabindex="-1"></a>  val_corte <span class="ot">&lt;-</span> <span class="fu">unique</span>(df_orden[, <span class="dv">1</span>])</span>
+<span id="cb39-23"><a href="#cb39-23" tabindex="-1"></a>  </span>
+<span id="cb39-24"><a href="#cb39-24" tabindex="-1"></a>  <span class="co"># Inicializar matriz para guardar los pares de (FPR, TPR)</span></span>
+<span id="cb39-25"><a href="#cb39-25" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="fu">length</span>(val_corte), <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb39-26"><a href="#cb39-26" tabindex="-1"></a>  </span>
+<span id="cb39-27"><a href="#cb39-27" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(val_corte)) {</span>
+<span id="cb39-28"><a href="#cb39-28" tabindex="-1"></a>    <span class="co"># Conseguir un vector lógico comparando cada valor de la columna con el valor de corte</span></span>
+<span id="cb39-29"><a href="#cb39-29" tabindex="-1"></a>    v_logico <span class="ot">&lt;-</span> df_orden[, <span class="dv">1</span>] <span class="sc">&gt;</span> val_corte[i]</span>
+<span id="cb39-30"><a href="#cb39-30" tabindex="-1"></a>    </span>
+<span id="cb39-31"><a href="#cb39-31" tabindex="-1"></a>    <span class="co"># Calcular True Positives (TP)</span></span>
+<span id="cb39-32"><a href="#cb39-32" tabindex="-1"></a>    TP <span class="ot">&lt;-</span> <span class="fu">sum</span>(v_logico <span class="sc">&amp;</span> clase_logica)</span>
+<span id="cb39-33"><a href="#cb39-33" tabindex="-1"></a>    </span>
+<span id="cb39-34"><a href="#cb39-34" tabindex="-1"></a>    <span class="co"># Calcular True Negatives (TN)</span></span>
+<span id="cb39-35"><a href="#cb39-35" tabindex="-1"></a>    TN <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">!</span>v_logico <span class="sc">&amp;</span> <span class="sc">!</span>clase_logica)</span>
+<span id="cb39-36"><a href="#cb39-36" tabindex="-1"></a>    </span>
+<span id="cb39-37"><a href="#cb39-37" tabindex="-1"></a>    <span class="co"># Calcular False Negatives (FN)</span></span>
+<span id="cb39-38"><a href="#cb39-38" tabindex="-1"></a>    FN <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">!</span>v_logico <span class="sc">&amp;</span> clase_logica)</span>
+<span id="cb39-39"><a href="#cb39-39" tabindex="-1"></a>    </span>
+<span id="cb39-40"><a href="#cb39-40" tabindex="-1"></a>    <span class="co"># Calcular False Positives (FP)</span></span>
+<span id="cb39-41"><a href="#cb39-41" tabindex="-1"></a>    FP <span class="ot">&lt;-</span> <span class="fu">sum</span>(v_logico <span class="sc">&amp;</span> <span class="sc">!</span>clase_logica)</span>
+<span id="cb39-42"><a href="#cb39-42" tabindex="-1"></a>    </span>
+<span id="cb39-43"><a href="#cb39-43" tabindex="-1"></a>    <span class="co"># Calcular True Positive Rate (TPR)</span></span>
+<span id="cb39-44"><a href="#cb39-44" tabindex="-1"></a>    TPR <span class="ot">&lt;-</span> <span class="fu">ifelse</span>((TP <span class="sc">+</span> FN) <span class="sc">==</span> <span class="dv">0</span>, <span class="dv">0</span>, TP <span class="sc">/</span> (TP <span class="sc">+</span> FN))</span>
+<span id="cb39-45"><a href="#cb39-45" tabindex="-1"></a>    </span>
+<span id="cb39-46"><a href="#cb39-46" tabindex="-1"></a>    <span class="co"># Calcular False Positive Rate (FPR)</span></span>
+<span id="cb39-47"><a href="#cb39-47" tabindex="-1"></a>    FPR <span class="ot">&lt;-</span> <span class="fu">ifelse</span>((FP <span class="sc">+</span> TN) <span class="sc">==</span> <span class="dv">0</span>, <span class="dv">0</span>, FP <span class="sc">/</span> (FP <span class="sc">+</span> TN))</span>
+<span id="cb39-48"><a href="#cb39-48" tabindex="-1"></a>    </span>
+<span id="cb39-49"><a href="#cb39-49" tabindex="-1"></a>    <span class="co"># Guardar el TPR y FPR en la matriz</span></span>
+<span id="cb39-50"><a href="#cb39-50" tabindex="-1"></a>    result[i, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(FPR, TPR)</span>
+<span id="cb39-51"><a href="#cb39-51" tabindex="-1"></a>  }</span>
+<span id="cb39-52"><a href="#cb39-52" tabindex="-1"></a>  </span>
+<span id="cb39-53"><a href="#cb39-53" tabindex="-1"></a>  <span class="co"># Añadir (0, 0) y (1, 1) si no están presentes</span></span>
+<span id="cb39-54"><a href="#cb39-54" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">any</span>(result[, <span class="dv">1</span>] <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> result[, <span class="dv">2</span>] <span class="sc">==</span> <span class="dv">0</span>)) {</span>
+<span id="cb39-55"><a href="#cb39-55" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), result)</span>
+<span id="cb39-56"><a href="#cb39-56" tabindex="-1"></a>  }</span>
+<span id="cb39-57"><a href="#cb39-57" tabindex="-1"></a>  </span>
+<span id="cb39-58"><a href="#cb39-58" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">any</span>(result[, <span class="dv">1</span>] <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> result[, <span class="dv">2</span>] <span class="sc">==</span> <span class="dv">1</span>)) {</span>
+<span id="cb39-59"><a href="#cb39-59" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">rbind</span>(result, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb39-60"><a href="#cb39-60" tabindex="-1"></a>  }</span>
+<span id="cb39-61"><a href="#cb39-61" tabindex="-1"></a>  </span>
+<span id="cb39-62"><a href="#cb39-62" tabindex="-1"></a>  <span class="co">#ordenar los resultados segun el valor de la primera columna de menor a mayor</span></span>
+<span id="cb39-63"><a href="#cb39-63" tabindex="-1"></a>  </span>
+<span id="cb39-64"><a href="#cb39-64" tabindex="-1"></a>  result <span class="ot">&lt;-</span> result[<span class="fu">order</span>(result[, <span class="dv">1</span>]), ]</span>
+<span id="cb39-65"><a href="#cb39-65" tabindex="-1"></a>  <span class="co"># Calcular el AUC utilizando la regla del trapecio</span></span>
+<span id="cb39-66"><a href="#cb39-66" tabindex="-1"></a>  area <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb39-67"><a href="#cb39-67" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">nrow</span>(result)) {</span>
+<span id="cb39-68"><a href="#cb39-68" tabindex="-1"></a>    <span class="co"># Calcular la anchura del intervalo</span></span>
+<span id="cb39-69"><a href="#cb39-69" tabindex="-1"></a>    h <span class="ot">&lt;-</span> <span class="fu">abs</span>(result[k<span class="dv">-1</span>, <span class="dv">1</span>] <span class="sc">-</span> result[k, <span class="dv">1</span>])</span>
+<span id="cb39-70"><a href="#cb39-70" tabindex="-1"></a>    <span class="co"># Aplicar la regla del trapecio</span></span>
+<span id="cb39-71"><a href="#cb39-71" tabindex="-1"></a>    area <span class="ot">&lt;-</span> area <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> (result[k<span class="dv">-1</span>, <span class="dv">2</span>] <span class="sc">+</span> result[k, <span class="dv">2</span>]) <span class="sc">*</span> h</span>
+<span id="cb39-72"><a href="#cb39-72" tabindex="-1"></a>    </span>
+<span id="cb39-73"><a href="#cb39-73" tabindex="-1"></a>  }</span>
+<span id="cb39-74"><a href="#cb39-74" tabindex="-1"></a>  </span>
+<span id="cb39-75"><a href="#cb39-75" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">result =</span> result, <span class="at">area =</span> area))</span>
+<span id="cb39-76"><a href="#cb39-76" tabindex="-1"></a>}</span></code></pre></div>
+<p>Un ejemplo:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>data_frame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a><span class="at">Variable1 =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>),  <span class="co"># 100 números aleatorios</span></span>
+<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a><span class="at">VariableBinaria =</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a><span class="fu">AUC</span>(data_frame)</span>
+<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a><span class="co">#&gt; $result</span></span>
+<span id="cb40-7"><a href="#cb40-7" tabindex="-1"></a><span class="co">#&gt;              [,1]       [,2]</span></span>
+<span id="cb40-8"><a href="#cb40-8" tabindex="-1"></a><span class="co">#&gt;   [1,] 0.00000000 0.04081633</span></span>
+<span id="cb40-9"><a href="#cb40-9" tabindex="-1"></a><span class="co">#&gt;   [2,] 0.00000000 0.02040816</span></span>
+<span id="cb40-10"><a href="#cb40-10" tabindex="-1"></a><span class="co">#&gt;   [3,] 0.00000000 0.00000000</span></span>
+<span id="cb40-11"><a href="#cb40-11" tabindex="-1"></a><span class="co">#&gt;   [4,] 0.01960784 0.12244898</span></span>
+<span id="cb40-12"><a href="#cb40-12" tabindex="-1"></a><span class="co">#&gt;   [5,] 0.01960784 0.10204082</span></span>
+<span id="cb40-13"><a href="#cb40-13" tabindex="-1"></a><span class="co">#&gt;   [6,] 0.01960784 0.08163265</span></span>
+<span id="cb40-14"><a href="#cb40-14" tabindex="-1"></a><span class="co">#&gt;   [7,] 0.01960784 0.06122449</span></span>
+<span id="cb40-15"><a href="#cb40-15" tabindex="-1"></a><span class="co">#&gt;   [8,] 0.01960784 0.04081633</span></span>
+<span id="cb40-16"><a href="#cb40-16" tabindex="-1"></a><span class="co">#&gt;   [9,] 0.03921569 0.12244898</span></span>
+<span id="cb40-17"><a href="#cb40-17" tabindex="-1"></a><span class="co">#&gt;  [10,] 0.05882353 0.12244898</span></span>
+<span id="cb40-18"><a href="#cb40-18" tabindex="-1"></a><span class="co">#&gt;  [11,] 0.07843137 0.12244898</span></span>
+<span id="cb40-19"><a href="#cb40-19" tabindex="-1"></a><span class="co">#&gt;  [12,] 0.09803922 0.14285714</span></span>
+<span id="cb40-20"><a href="#cb40-20" tabindex="-1"></a><span class="co">#&gt;  [13,] 0.09803922 0.12244898</span></span>
+<span id="cb40-21"><a href="#cb40-21" tabindex="-1"></a><span class="co">#&gt;  [14,] 0.11764706 0.20408163</span></span>
+<span id="cb40-22"><a href="#cb40-22" tabindex="-1"></a><span class="co">#&gt;  [15,] 0.11764706 0.18367347</span></span>
+<span id="cb40-23"><a href="#cb40-23" tabindex="-1"></a><span class="co">#&gt;  [16,] 0.11764706 0.16326531</span></span>
+<span id="cb40-24"><a href="#cb40-24" tabindex="-1"></a><span class="co">#&gt;  [17,] 0.11764706 0.14285714</span></span>
+<span id="cb40-25"><a href="#cb40-25" tabindex="-1"></a><span class="co">#&gt;  [18,] 0.13725490 0.20408163</span></span>
+<span id="cb40-26"><a href="#cb40-26" tabindex="-1"></a><span class="co">#&gt;  [19,] 0.15686275 0.20408163</span></span>
+<span id="cb40-27"><a href="#cb40-27" tabindex="-1"></a><span class="co">#&gt;  [20,] 0.17647059 0.22448980</span></span>
+<span id="cb40-28"><a href="#cb40-28" tabindex="-1"></a><span class="co">#&gt;  [21,] 0.17647059 0.20408163</span></span>
+<span id="cb40-29"><a href="#cb40-29" tabindex="-1"></a><span class="co">#&gt;  [22,] 0.19607843 0.22448980</span></span>
+<span id="cb40-30"><a href="#cb40-30" tabindex="-1"></a><span class="co">#&gt;  [23,] 0.21568627 0.30612245</span></span>
+<span id="cb40-31"><a href="#cb40-31" tabindex="-1"></a><span class="co">#&gt;  [24,] 0.21568627 0.28571429</span></span>
+<span id="cb40-32"><a href="#cb40-32" tabindex="-1"></a><span class="co">#&gt;  [25,] 0.21568627 0.26530612</span></span>
+<span id="cb40-33"><a href="#cb40-33" tabindex="-1"></a><span class="co">#&gt;  [26,] 0.21568627 0.24489796</span></span>
+<span id="cb40-34"><a href="#cb40-34" tabindex="-1"></a><span class="co">#&gt;  [27,] 0.21568627 0.22448980</span></span>
+<span id="cb40-35"><a href="#cb40-35" tabindex="-1"></a><span class="co">#&gt;  [28,] 0.23529412 0.30612245</span></span>
+<span id="cb40-36"><a href="#cb40-36" tabindex="-1"></a><span class="co">#&gt;  [29,] 0.25490196 0.32653061</span></span>
+<span id="cb40-37"><a href="#cb40-37" tabindex="-1"></a><span class="co">#&gt;  [30,] 0.25490196 0.30612245</span></span>
+<span id="cb40-38"><a href="#cb40-38" tabindex="-1"></a><span class="co">#&gt;  [31,] 0.27450980 0.40816327</span></span>
+<span id="cb40-39"><a href="#cb40-39" tabindex="-1"></a><span class="co">#&gt;  [32,] 0.27450980 0.38775510</span></span>
+<span id="cb40-40"><a href="#cb40-40" tabindex="-1"></a><span class="co">#&gt;  [33,] 0.27450980 0.36734694</span></span>
+<span id="cb40-41"><a href="#cb40-41" tabindex="-1"></a><span class="co">#&gt;  [34,] 0.27450980 0.34693878</span></span>
+<span id="cb40-42"><a href="#cb40-42" tabindex="-1"></a><span class="co">#&gt;  [35,] 0.27450980 0.32653061</span></span>
+<span id="cb40-43"><a href="#cb40-43" tabindex="-1"></a><span class="co">#&gt;  [36,] 0.29411765 0.40816327</span></span>
+<span id="cb40-44"><a href="#cb40-44" tabindex="-1"></a><span class="co">#&gt;  [37,] 0.31372549 0.44897959</span></span>
+<span id="cb40-45"><a href="#cb40-45" tabindex="-1"></a><span class="co">#&gt;  [38,] 0.31372549 0.42857143</span></span>
+<span id="cb40-46"><a href="#cb40-46" tabindex="-1"></a><span class="co">#&gt;  [39,] 0.31372549 0.40816327</span></span>
+<span id="cb40-47"><a href="#cb40-47" tabindex="-1"></a><span class="co">#&gt;  [40,] 0.33333333 0.46938776</span></span>
+<span id="cb40-48"><a href="#cb40-48" tabindex="-1"></a><span class="co">#&gt;  [41,] 0.33333333 0.44897959</span></span>
+<span id="cb40-49"><a href="#cb40-49" tabindex="-1"></a><span class="co">#&gt;  [42,] 0.35294118 0.46938776</span></span>
+<span id="cb40-50"><a href="#cb40-50" tabindex="-1"></a><span class="co">#&gt;  [43,] 0.37254902 0.46938776</span></span>
+<span id="cb40-51"><a href="#cb40-51" tabindex="-1"></a><span class="co">#&gt;  [44,] 0.39215686 0.46938776</span></span>
+<span id="cb40-52"><a href="#cb40-52" tabindex="-1"></a><span class="co">#&gt;  [45,] 0.41176471 0.46938776</span></span>
+<span id="cb40-53"><a href="#cb40-53" tabindex="-1"></a><span class="co">#&gt;  [46,] 0.43137255 0.46938776</span></span>
+<span id="cb40-54"><a href="#cb40-54" tabindex="-1"></a><span class="co">#&gt;  [47,] 0.45098039 0.53061224</span></span>
+<span id="cb40-55"><a href="#cb40-55" tabindex="-1"></a><span class="co">#&gt;  [48,] 0.45098039 0.51020408</span></span>
+<span id="cb40-56"><a href="#cb40-56" tabindex="-1"></a><span class="co">#&gt;  [49,] 0.45098039 0.48979592</span></span>
+<span id="cb40-57"><a href="#cb40-57" tabindex="-1"></a><span class="co">#&gt;  [50,] 0.45098039 0.46938776</span></span>
+<span id="cb40-58"><a href="#cb40-58" tabindex="-1"></a><span class="co">#&gt;  [51,] 0.47058824 0.53061224</span></span>
+<span id="cb40-59"><a href="#cb40-59" tabindex="-1"></a><span class="co">#&gt;  [52,] 0.49019608 0.63265306</span></span>
+<span id="cb40-60"><a href="#cb40-60" tabindex="-1"></a><span class="co">#&gt;  [53,] 0.49019608 0.61224490</span></span>
+<span id="cb40-61"><a href="#cb40-61" tabindex="-1"></a><span class="co">#&gt;  [54,] 0.49019608 0.59183673</span></span>
+<span id="cb40-62"><a href="#cb40-62" tabindex="-1"></a><span class="co">#&gt;  [55,] 0.49019608 0.57142857</span></span>
+<span id="cb40-63"><a href="#cb40-63" tabindex="-1"></a><span class="co">#&gt;  [56,] 0.49019608 0.55102041</span></span>
+<span id="cb40-64"><a href="#cb40-64" tabindex="-1"></a><span class="co">#&gt;  [57,] 0.49019608 0.53061224</span></span>
+<span id="cb40-65"><a href="#cb40-65" tabindex="-1"></a><span class="co">#&gt;  [58,] 0.50980392 0.65306122</span></span>
+<span id="cb40-66"><a href="#cb40-66" tabindex="-1"></a><span class="co">#&gt;  [59,] 0.50980392 0.63265306</span></span>
+<span id="cb40-67"><a href="#cb40-67" tabindex="-1"></a><span class="co">#&gt;  [60,] 0.52941176 0.65306122</span></span>
+<span id="cb40-68"><a href="#cb40-68" tabindex="-1"></a><span class="co">#&gt;  [61,] 0.54901961 0.65306122</span></span>
+<span id="cb40-69"><a href="#cb40-69" tabindex="-1"></a><span class="co">#&gt;  [62,] 0.56862745 0.67346939</span></span>
+<span id="cb40-70"><a href="#cb40-70" tabindex="-1"></a><span class="co">#&gt;  [63,] 0.56862745 0.65306122</span></span>
+<span id="cb40-71"><a href="#cb40-71" tabindex="-1"></a><span class="co">#&gt;  [64,] 0.58823529 0.67346939</span></span>
+<span id="cb40-72"><a href="#cb40-72" tabindex="-1"></a><span class="co">#&gt;  [65,] 0.60784314 0.71428571</span></span>
+<span id="cb40-73"><a href="#cb40-73" tabindex="-1"></a><span class="co">#&gt;  [66,] 0.60784314 0.69387755</span></span>
+<span id="cb40-74"><a href="#cb40-74" tabindex="-1"></a><span class="co">#&gt;  [67,] 0.60784314 0.67346939</span></span>
+<span id="cb40-75"><a href="#cb40-75" tabindex="-1"></a><span class="co">#&gt;  [68,] 0.62745098 0.73469388</span></span>
+<span id="cb40-76"><a href="#cb40-76" tabindex="-1"></a><span class="co">#&gt;  [69,] 0.62745098 0.71428571</span></span>
+<span id="cb40-77"><a href="#cb40-77" tabindex="-1"></a><span class="co">#&gt;  [70,] 0.64705882 0.73469388</span></span>
+<span id="cb40-78"><a href="#cb40-78" tabindex="-1"></a><span class="co">#&gt;  [71,] 0.66666667 0.73469388</span></span>
+<span id="cb40-79"><a href="#cb40-79" tabindex="-1"></a><span class="co">#&gt;  [72,] 0.68627451 0.77551020</span></span>
+<span id="cb40-80"><a href="#cb40-80" tabindex="-1"></a><span class="co">#&gt;  [73,] 0.68627451 0.75510204</span></span>
+<span id="cb40-81"><a href="#cb40-81" tabindex="-1"></a><span class="co">#&gt;  [74,] 0.68627451 0.73469388</span></span>
+<span id="cb40-82"><a href="#cb40-82" tabindex="-1"></a><span class="co">#&gt;  [75,] 0.70588235 0.77551020</span></span>
+<span id="cb40-83"><a href="#cb40-83" tabindex="-1"></a><span class="co">#&gt;  [76,] 0.72549020 0.87755102</span></span>
+<span id="cb40-84"><a href="#cb40-84" tabindex="-1"></a><span class="co">#&gt;  [77,] 0.72549020 0.85714286</span></span>
+<span id="cb40-85"><a href="#cb40-85" tabindex="-1"></a><span class="co">#&gt;  [78,] 0.72549020 0.83673469</span></span>
+<span id="cb40-86"><a href="#cb40-86" tabindex="-1"></a><span class="co">#&gt;  [79,] 0.72549020 0.81632653</span></span>
+<span id="cb40-87"><a href="#cb40-87" tabindex="-1"></a><span class="co">#&gt;  [80,] 0.72549020 0.79591837</span></span>
+<span id="cb40-88"><a href="#cb40-88" tabindex="-1"></a><span class="co">#&gt;  [81,] 0.72549020 0.77551020</span></span>
+<span id="cb40-89"><a href="#cb40-89" tabindex="-1"></a><span class="co">#&gt;  [82,] 0.74509804 0.89795918</span></span>
+<span id="cb40-90"><a href="#cb40-90" tabindex="-1"></a><span class="co">#&gt;  [83,] 0.74509804 0.87755102</span></span>
+<span id="cb40-91"><a href="#cb40-91" tabindex="-1"></a><span class="co">#&gt;  [84,] 0.76470588 0.89795918</span></span>
+<span id="cb40-92"><a href="#cb40-92" tabindex="-1"></a><span class="co">#&gt;  [85,] 0.78431373 0.91836735</span></span>
+<span id="cb40-93"><a href="#cb40-93" tabindex="-1"></a><span class="co">#&gt;  [86,] 0.78431373 0.89795918</span></span>
+<span id="cb40-94"><a href="#cb40-94" tabindex="-1"></a><span class="co">#&gt;  [87,] 0.80392157 0.91836735</span></span>
+<span id="cb40-95"><a href="#cb40-95" tabindex="-1"></a><span class="co">#&gt;  [88,] 0.82352941 0.91836735</span></span>
+<span id="cb40-96"><a href="#cb40-96" tabindex="-1"></a><span class="co">#&gt;  [89,] 0.84313725 0.91836735</span></span>
+<span id="cb40-97"><a href="#cb40-97" tabindex="-1"></a><span class="co">#&gt;  [90,] 0.86274510 0.95918367</span></span>
+<span id="cb40-98"><a href="#cb40-98" tabindex="-1"></a><span class="co">#&gt;  [91,] 0.86274510 0.93877551</span></span>
+<span id="cb40-99"><a href="#cb40-99" tabindex="-1"></a><span class="co">#&gt;  [92,] 0.86274510 0.91836735</span></span>
+<span id="cb40-100"><a href="#cb40-100" tabindex="-1"></a><span class="co">#&gt;  [93,] 0.88235294 0.97959184</span></span>
+<span id="cb40-101"><a href="#cb40-101" tabindex="-1"></a><span class="co">#&gt;  [94,] 0.88235294 0.95918367</span></span>
+<span id="cb40-102"><a href="#cb40-102" tabindex="-1"></a><span class="co">#&gt;  [95,] 0.90196078 0.97959184</span></span>
+<span id="cb40-103"><a href="#cb40-103" tabindex="-1"></a><span class="co">#&gt;  [96,] 0.92156863 0.97959184</span></span>
+<span id="cb40-104"><a href="#cb40-104" tabindex="-1"></a><span class="co">#&gt;  [97,] 0.94117647 0.97959184</span></span>
+<span id="cb40-105"><a href="#cb40-105" tabindex="-1"></a><span class="co">#&gt;  [98,] 0.96078431 1.00000000</span></span>
+<span id="cb40-106"><a href="#cb40-106" tabindex="-1"></a><span class="co">#&gt;  [99,] 0.96078431 0.97959184</span></span>
+<span id="cb40-107"><a href="#cb40-107" tabindex="-1"></a><span class="co">#&gt; [100,] 0.98039216 1.00000000</span></span>
+<span id="cb40-108"><a href="#cb40-108" tabindex="-1"></a><span class="co">#&gt; [101,] 1.00000000 1.00000000</span></span>
+<span id="cb40-109"><a href="#cb40-109" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb40-110"><a href="#cb40-110" tabindex="-1"></a><span class="co">#&gt; $area</span></span>
+<span id="cb40-111"><a href="#cb40-111" tabindex="-1"></a><span class="co">#&gt; [1] 0.5770308</span></span></code></pre></div>
+<p>La función nos devuelve una lista con dos elementos: una matriz
+numérica con cada par de TPR y FPR, y un valor numérico que representa
+el AUC.</p>
+<p>AUC = 1: Indica un modelo perfecto, que clasifica todos los positivos
+y negativos correctamente sin errores. AUC = 0.5: Indica un modelo sin
+capacidad predictiva, equivalente a una clasificación aleatoria. AUC
+&lt; 0.5: Indica que el modelo es peor que una clasificación aleatoria
+(lo que suele ser una señal para revisar el modelo o los datos).</p>
+<p>##Cálculo de métricas dependiendo del tipo de variable Hasta ahora,
+hemos asumido que los datasets tenían las variables de la misma clase
+(variables de clase factor en el caso de la entropía, variables
+numéricas en el caso de la correlación etc.) pero muchas veces, nos
+encontraremos con datasets que contienen distintos tipos de variables.
+Para ello, he creado dos funciones para que dependiendo de la clase de
+la variable, actúe de una forma o de otra.</p>
+<p>Por un lado tenemos la función que calcula la varianza y el AUC
+cuando la variable es numérica y la entropía si la variable es de tipo
+factor. Por lo que la función toma un data frame que puede contener
+columnas numéricas o de clase factor y lo que hace en primer lugar es
+iterar sobre cada columna (variable) del dataset y calcular la varianza
+si la columna es numérica. También calculará el AUC si identifica una
+columna binaria en el dataset. Y por último, si la columna es de clase
+factor, calculará la entropía. Finalmente, recoge todos los resultados
+en un data frame numérico que es lo que nos devuelve la función.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>calcular_metricas <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>  <span class="co"># Inicializar listas para resultados</span></span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>  varianzas <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">ncol</span>(df))</span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>  auc_values <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">ncol</span>(df))</span>
+<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>  entropias <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">ncol</span>(df))</span>
+<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a>  <span class="co"># Iterar sobre cada columna del dataframe</span></span>
+<span id="cb41-8"><a href="#cb41-8" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(df)) {</span>
+<span id="cb41-9"><a href="#cb41-9" tabindex="-1"></a>    col <span class="ot">&lt;-</span> df[[i]]</span>
+<span id="cb41-10"><a href="#cb41-10" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" tabindex="-1"></a>    <span class="co"># Calcular varianza si la columna es numérica</span></span>
+<span id="cb41-12"><a href="#cb41-12" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.numeric</span>(col)) {</span>
+<span id="cb41-13"><a href="#cb41-13" tabindex="-1"></a>      varianzas[i] <span class="ot">&lt;-</span> <span class="fu">var_vector</span>(col)</span>
+<span id="cb41-14"><a href="#cb41-14" tabindex="-1"></a></span>
+<span id="cb41-15"><a href="#cb41-15" tabindex="-1"></a>      <span class="co"># Calcular AUC si hay una columna binaria</span></span>
+<span id="cb41-16"><a href="#cb41-16" tabindex="-1"></a>      bin_col_index <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">sapply</span>(df, <span class="cf">function</span>(x) <span class="fu">is.factor</span>(x) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(<span class="fu">levels</span>(x)) <span class="sc">==</span> <span class="dv">2</span>))[<span class="dv">1</span>]</span>
+<span id="cb41-17"><a href="#cb41-17" tabindex="-1"></a>      <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.na</span>(bin_col_index)) {</span>
+<span id="cb41-18"><a href="#cb41-18" tabindex="-1"></a>        bin_col <span class="ot">&lt;-</span> df[[bin_col_index]]</span>
+<span id="cb41-19"><a href="#cb41-19" tabindex="-1"></a>        df_auc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">num_col =</span> col, <span class="at">bin_col =</span> bin_col)</span>
+<span id="cb41-20"><a href="#cb41-20" tabindex="-1"></a>        auc_values[i] <span class="ot">&lt;-</span> <span class="fu">AUC</span>(df_auc)<span class="sc">$</span>area</span>
+<span id="cb41-21"><a href="#cb41-21" tabindex="-1"></a>      }</span>
+<span id="cb41-22"><a href="#cb41-22" tabindex="-1"></a>    }</span>
+<span id="cb41-23"><a href="#cb41-23" tabindex="-1"></a></span>
+<span id="cb41-24"><a href="#cb41-24" tabindex="-1"></a>    <span class="co"># Calcular entropía si la columna es categórica</span></span>
+<span id="cb41-25"><a href="#cb41-25" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.factor</span>(col)) {</span>
+<span id="cb41-26"><a href="#cb41-26" tabindex="-1"></a>      entropias[i] <span class="ot">&lt;-</span> <span class="fu">entropy</span>(col)</span>
+<span id="cb41-27"><a href="#cb41-27" tabindex="-1"></a>    }</span>
+<span id="cb41-28"><a href="#cb41-28" tabindex="-1"></a>  }</span>
+<span id="cb41-29"><a href="#cb41-29" tabindex="-1"></a></span>
+<span id="cb41-30"><a href="#cb41-30" tabindex="-1"></a>  <span class="co"># Crear el dataframe de resultados</span></span>
+<span id="cb41-31"><a href="#cb41-31" tabindex="-1"></a>  resultados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb41-32"><a href="#cb41-32" tabindex="-1"></a>    <span class="at">Variable =</span> <span class="fu">names</span>(df),</span>
+<span id="cb41-33"><a href="#cb41-33" tabindex="-1"></a>    <span class="at">Varianza =</span> varianzas,</span>
+<span id="cb41-34"><a href="#cb41-34" tabindex="-1"></a>    <span class="at">AUC =</span> auc_values,</span>
+<span id="cb41-35"><a href="#cb41-35" tabindex="-1"></a>    Entropía <span class="ot">=</span> entropias</span>
+<span id="cb41-36"><a href="#cb41-36" tabindex="-1"></a>  )</span>
+<span id="cb41-37"><a href="#cb41-37" tabindex="-1"></a></span>
+<span id="cb41-38"><a href="#cb41-38" tabindex="-1"></a>  <span class="fu">return</span>(resultados)</span>
+<span id="cb41-39"><a href="#cb41-39" tabindex="-1"></a>}</span></code></pre></div>
+<p>Un ejemplo:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Score =</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.35</span>, <span class="fl">0.6</span>, <span class="fl">0.3</span>, <span class="fl">0.75</span>, <span class="fl">0.55</span>, <span class="fl">0.8</span>)),</span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a><span class="at">Outcome =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Negative&quot;</span>, <span class="st">&quot;Negative&quot;</span>, <span class="st">&quot;Negative&quot;</span>, <span class="st">&quot;Positive&quot;</span>, <span class="st">&quot;Negative&quot;</span>, <span class="st">&quot;Positive&quot;</span>, <span class="st">&quot;Positive&quot;</span>, <span class="st">&quot;Positive&quot;</span>)))</span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a><span class="fu">calcular_metricas</span>(data)</span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a><span class="co">#&gt;   Variable   Varianza   AUC Entropía</span></span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a><span class="co">#&gt; 1    Score 0.05638393 0.875       NA</span></span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a><span class="co">#&gt; 2  Outcome         NA    NA        1</span></span></code></pre></div>
+<p>Como vemos, esta función utiliza las funciones que hemos mencionado
+anteriormente para calcular la varianza, el AUC y la entropía. En el
+caso del AUC, la función toma un data frame como entrada por lo que
+antes de utilizar la función, identificamos la columna numérica y la
+columna binaria y creamos un data frame de dos columnas antes de pasarle
+los datos a la función de AUC.</p>
+<p>En este apartado tenemos una segunda función que calcula la
+correlación entre pares si las variables son numéricas y calcula la
+información mutua si las variables son categóricas. Por lo que la
+función toma un data frame que puede contener columnas numéricas o de
+clase factor y lo que hace en primer lugar es identificar de qué tipo es
+cada columna y guarda la clase en un vector. Después, itera por pares de
+columnas en el data frame y calcula la correlación si ambas son
+numéricas o la información mutua si ambas son de clase factor. En el
+caso de que una columna sea de tipo numérico y otra de tipo factor no
+hace nada y los ignora.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>cor_infomutua <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {<span class="co">#df es un data frame</span></span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>  <span class="co"># Identifica el número de columnas y el tipo de cada columna</span></span>
+<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a>  n_col <span class="ot">&lt;-</span> <span class="fu">ncol</span>(df)</span>
+<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a>  tipos <span class="ot">&lt;-</span> <span class="fu">sapply</span>(df, class)</span>
+<span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" tabindex="-1"></a>  <span class="co"># Matriz de resultados</span></span>
+<span id="cb43-8"><a href="#cb43-8" tabindex="-1"></a>  result_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> n_col, <span class="at">ncol =</span> n_col)</span>
+<span id="cb43-9"><a href="#cb43-9" tabindex="-1"></a>  <span class="fu">colnames</span>(result_matrix) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(df)</span>
+<span id="cb43-10"><a href="#cb43-10" tabindex="-1"></a>  <span class="fu">rownames</span>(result_matrix) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(df)</span>
+<span id="cb43-11"><a href="#cb43-11" tabindex="-1"></a></span>
+<span id="cb43-12"><a href="#cb43-12" tabindex="-1"></a>  <span class="co"># Calcular correlaciones e información mutua entre cada par de columnas</span></span>
+<span id="cb43-13"><a href="#cb43-13" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_col) {</span>
+<span id="cb43-14"><a href="#cb43-14" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_col) {</span>
+<span id="cb43-15"><a href="#cb43-15" tabindex="-1"></a>      <span class="co"># Si ambas variables son numéricas, calcula correlación</span></span>
+<span id="cb43-16"><a href="#cb43-16" tabindex="-1"></a>      <span class="cf">if</span> (tipos[i] <span class="sc">==</span> <span class="st">&quot;numeric&quot;</span> <span class="sc">&amp;&amp;</span> tipos[j] <span class="sc">==</span> <span class="st">&quot;numeric&quot;</span>) {</span>
+<span id="cb43-17"><a href="#cb43-17" tabindex="-1"></a>        matriz_dat <span class="ot">&lt;-</span> df[, <span class="fu">c</span>(i, j)]  <span class="co"># Matriz de datos para este par</span></span>
+<span id="cb43-18"><a href="#cb43-18" tabindex="-1"></a>        result_matrix[i, j] <span class="ot">&lt;-</span> <span class="fu">cor_fun</span>(matriz_dat)[<span class="dv">1</span>,<span class="dv">2</span>]  <span class="co"># Correlación</span></span>
+<span id="cb43-19"><a href="#cb43-19" tabindex="-1"></a>      }</span>
+<span id="cb43-20"><a href="#cb43-20" tabindex="-1"></a>      <span class="co"># Si ambas variables son factores, calcula información mutua</span></span>
+<span id="cb43-21"><a href="#cb43-21" tabindex="-1"></a>      <span class="cf">else</span> <span class="cf">if</span> (tipos[i] <span class="sc">==</span> <span class="st">&quot;factor&quot;</span> <span class="sc">&amp;&amp;</span> tipos[j] <span class="sc">==</span> <span class="st">&quot;factor&quot;</span>) {</span>
+<span id="cb43-22"><a href="#cb43-22" tabindex="-1"></a>        matriz_categ <span class="ot">&lt;-</span> df[, <span class="fu">c</span>(i, j)]</span>
+<span id="cb43-23"><a href="#cb43-23" tabindex="-1"></a>        result_matrix[i, j] <span class="ot">&lt;-</span> <span class="fu">info_mutua</span>(matriz_categ)[<span class="dv">1</span>, <span class="dv">2</span>]  <span class="co"># Información mutua</span></span>
+<span id="cb43-24"><a href="#cb43-24" tabindex="-1"></a>      }</span>
+<span id="cb43-25"><a href="#cb43-25" tabindex="-1"></a>      <span class="cf">else</span> { <span class="co">#cuando una columna es factor y otra numerica los ignoramos</span></span>
+<span id="cb43-26"><a href="#cb43-26" tabindex="-1"></a>        result_matrix[i,j] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb43-27"><a href="#cb43-27" tabindex="-1"></a>      }</span>
+<span id="cb43-28"><a href="#cb43-28" tabindex="-1"></a>    }</span>
+<span id="cb43-29"><a href="#cb43-29" tabindex="-1"></a>  }</span>
+<span id="cb43-30"><a href="#cb43-30" tabindex="-1"></a></span>
+<span id="cb43-31"><a href="#cb43-31" tabindex="-1"></a>  <span class="fu">return</span>(result_matrix)</span>
+<span id="cb43-32"><a href="#cb43-32" tabindex="-1"></a>}</span></code></pre></div>
+<p>Un ejemplo:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>dataset <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">var_num1 =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>),                 <span class="co"># Variable numérica</span></span>
+<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a><span class="at">var_num2 =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">5</span>),       <span class="co"># Otra variable numérica</span></span>
+<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a><span class="at">var_cat1 =</span> <span class="fu">factor</span>(<span class="fu">sample</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)),  <span class="co"># Variable categórica con 3 categorías</span></span>
+<span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a><span class="at">var_cat2 =</span> <span class="fu">factor</span>(<span class="fu">sample</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))   <span class="co"># Variable categórica con 4 categorías)</span></span>
+<span id="cb44-5"><a href="#cb44-5" tabindex="-1"></a><span class="fu">cor_infomutua</span>(dataset)</span>
+<span id="cb44-6"><a href="#cb44-6" tabindex="-1"></a><span class="co">#&gt;            var_num1   var_num2 var_cat1 var_cat2</span></span>
+<span id="cb44-7"><a href="#cb44-7" tabindex="-1"></a><span class="co">#&gt; var_num1 1.00000000 0.05597331       NA       NA</span></span>
+<span id="cb44-8"><a href="#cb44-8" tabindex="-1"></a><span class="co">#&gt; var_num2 0.05597331 1.00000000       NA       NA</span></span>
+<span id="cb44-9"><a href="#cb44-9" tabindex="-1"></a><span class="co">#&gt; var_cat1         NA         NA 2.054163 1.124188</span></span>
+<span id="cb44-10"><a href="#cb44-10" tabindex="-1"></a><span class="co">#&gt; var_cat2         NA         NA 1.124188 2.583269</span></span></code></pre></div>
+<p>Por lo que la función nos devuelve una matriz de clase numérico.</p>
+<p>##Funciones de plot En este apartado, explicaré las funciones que he
+creado para la visualización de algunas métricas que he ido calculando a
+lo largo de este trabajo.</p>
+<p>La primera función de este apartado será la función que visualiza la
+curva ROC. Esta función, tomará un data frame que tendrá por lo menos
+una columna numérica y una columna binaria de clase factor y calculará
+los pares de puntos TPR y FPR utilizando internamente la función AUC
+descrita anteriormente. Luego, creará un gráfico con esos puntos y
+también dibujará la curva que tendríamos si el AUC=0.5. Es decir, la
+curva equivalente a una clasificación aleatoria.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>plot_AUC <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { <span class="co">#x será una matriz/ data frame</span></span>
+<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a>  data_AUC <span class="ot">&lt;-</span> <span class="fu">AUC</span>(x)</span>
+<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a>  <span class="fu">plot</span>(data_AUC<span class="sc">$</span>result, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;blue&quot;</span>, <span class="at">main=</span><span class="st">&quot;La curva ROC&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Tasa de Falsos Positivos (FPR)&quot;</span>,</span>
+<span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a>       <span class="at">ylab=</span><span class="st">&quot;Tasa de Verdaderos Positivos (TPR)&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb45-5"><a href="#cb45-5" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">a=</span><span class="dv">0</span>, <span class="at">b=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lty=</span><span class="dv">2</span>) <span class="co">#la linea que define la probabilidad del 50% (es decir random)</span></span>
+<span id="cb45-6"><a href="#cb45-6" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>,               <span class="co"># Especificar la posición de la leyenda</span></span>
+<span id="cb45-7"><a href="#cb45-7" tabindex="-1"></a>         <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Curva ROC&quot;</span>, <span class="st">&quot;Random Chance&quot;</span>), <span class="co"># Textos de la leyenda</span></span>
+<span id="cb45-8"><a href="#cb45-8" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>),      <span class="co"># Colores de las líneas</span></span>
+<span id="cb45-9"><a href="#cb45-9" tabindex="-1"></a>         <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),                <span class="co"># Estilos de las líneas (1 para sólida, 2 para punteada)</span></span>
+<span id="cb45-10"><a href="#cb45-10" tabindex="-1"></a>         <span class="at">lwd =</span> <span class="dv">2</span>)                     <span class="co"># Ancho de las líneas</span></span>
+<span id="cb45-11"><a href="#cb45-11" tabindex="-1"></a></span>
+<span id="cb45-12"><a href="#cb45-12" tabindex="-1"></a>}</span></code></pre></div>
+<p>El ejemplo:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a>data_frame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a><span class="at">Variable1 =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>),  <span class="co"># 100 números aleatorios</span></span>
+<span id="cb46-4"><a href="#cb46-4" tabindex="-1"></a><span class="at">VariableBinaria =</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb46-5"><a href="#cb46-5" tabindex="-1"></a><span class="fu">plot_AUC</span>(data_frame)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>Una segunda función sirve para visualizar la entropía normalizada de
+las variables de un dataset. Esta función tomará un data frame con
+variables categóricas de clase factor, luego utilizará la función que
+calcula la entropía normalizada (anteriormente descrita) para cada
+variable (columna) y finalmente creará un gráfico de barras. A cada
+variable le corresponde una de las barras.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a>plot_entropy <span class="ot">&lt;-</span> <span class="cf">function</span>(df) { <span class="co">#data frame de categorias</span></span>
+<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a>  H_norm <span class="ot">&lt;-</span> <span class="fu">norm_entropy_df</span>(df)</span>
+<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a>  n<span class="ot">&lt;-</span> <span class="fu">length</span>(H_norm)</span>
+<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a>  names_bar <span class="ot">&lt;-</span> <span class="fu">seq</span>(n)</span>
+<span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a>  <span class="fu">barplot</span>(H_norm, <span class="at">xlab=</span><span class="st">&quot;Número de variables&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Entropía normalizada&quot;</span>,</span>
+<span id="cb47-6"><a href="#cb47-6" tabindex="-1"></a>          <span class="at">main=</span><span class="st">&quot;Diagrama de barras para la entropía normalizada de cada variable&quot;</span>,</span>
+<span id="cb47-7"><a href="#cb47-7" tabindex="-1"></a>          <span class="at">space=</span><span class="dv">0</span>, <span class="at">col=</span><span class="st">&quot;orange&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">names.arg=</span>names_bar)</span>
+<span id="cb47-8"><a href="#cb47-8" tabindex="-1"></a></span>
+<span id="cb47-9"><a href="#cb47-9" tabindex="-1"></a>}</span></code></pre></div>
+<p>Un ejemplo:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Columna_A =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Azul&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Azul&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Verde&quot;</span>)),</span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a><span class="at">Columna_B =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Círculo&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Círculo&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Cuadrado&quot;</span>, <span class="st">&quot;Círculo&quot;</span>, <span class="st">&quot;Triángulo&quot;</span>, <span class="st">&quot;Círculo&quot;</span>)),</span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a><span class="at">Columna_C =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Medio&quot;</span>)))</span>
+<span id="cb48-4"><a href="#cb48-4" tabindex="-1"></a><span class="fu">plot_entropy</span>(data)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>Una tercera función permite visualizar un mapa de calor de una matriz
+de correlaciones. Esta función tomará un data frame con variables
+numéricas y calculará internamente la matriz de correlaciones utilizando
+la función que hemos descrito anteriormente y finalmente crea un mapa de
+calor para visualizar las correlaciones.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a>plot_cor <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { <span class="co">#x es un conjunto de datos matriz / data frame</span></span>
+<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a>  correlaciones <span class="ot">&lt;-</span> <span class="fu">cor_fun</span>(x)</span>
+<span id="cb49-3"><a href="#cb49-3" tabindex="-1"></a>  nombres_columnas <span class="ot">&lt;-</span> <span class="fu">colnames</span>(x)</span>
+<span id="cb49-4"><a href="#cb49-4" tabindex="-1"></a>  <span class="fu">heatmap</span>(correlaciones, <span class="at">main=</span><span class="st">&quot;Mapa de calor para la matriz de correlaciones&quot;</span>,</span>
+<span id="cb49-5"><a href="#cb49-5" tabindex="-1"></a>          <span class="at">Rowv =</span> <span class="cn">NA</span>, <span class="at">Colv =</span> <span class="cn">NA</span>, <span class="at">labRow =</span> nombres_columnas, <span class="at">labCol =</span> nombres_columnas )</span>
+<span id="cb49-6"><a href="#cb49-6" tabindex="-1"></a>}</span></code></pre></div>
+<p>Un ejemplo:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a>datos_ejemplo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb50-3"><a href="#cb50-3" tabindex="-1"></a><span class="at">Var1 =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>),</span>
+<span id="cb50-4"><a href="#cb50-4" tabindex="-1"></a><span class="at">Var2 =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>),</span>
+<span id="cb50-5"><a href="#cb50-5" tabindex="-1"></a><span class="at">Var3 =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>),</span>
+<span id="cb50-6"><a href="#cb50-6" tabindex="-1"></a><span class="at">Var4 =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
+<span id="cb50-7"><a href="#cb50-7" tabindex="-1"></a><span class="fu">plot_cor</span>(datos_ejemplo)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>En un mapa de calor cuánto más intenso sea el color, mayor será la
+correlación entre esas variables. Y por el contrario, cuánto más apagado
+sea el color, menor será la correlación. En este ejemplo, vemos cómo la
+diagonal tiene el color más intenso. Esto se debe a que la correlación
+entre una variable sobre sí misma es máxima.</p>
+<p>Para terminar, tenemos una última función para visualizar la
+información mutua de un dataset. Esta función tomará un data frame con
+variables categóricas de clase factor y calculará internamente la matriz
+de información mutua utilizando la función que hemos descrito
+anteriormente y finalmente crea un mapa de calor para visualizar las
+información mutua.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a>plot_infomutua <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="co">#x es un conjunto de datos categoricos</span></span>
+<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a>  matriz_im <span class="ot">&lt;-</span> <span class="fu">info_mutua</span>(x)</span>
+<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a>  nombres_columnas <span class="ot">&lt;-</span> <span class="fu">colnames</span>(x)</span>
+<span id="cb51-4"><a href="#cb51-4" tabindex="-1"></a>  <span class="fu">heatmap</span>(matriz_im, <span class="at">main=</span><span class="st">&quot;Mapa de calor para la matriz de información mutua&quot;</span>,</span>
+<span id="cb51-5"><a href="#cb51-5" tabindex="-1"></a>          <span class="at">Rowv =</span> <span class="cn">NA</span>, <span class="at">Colv =</span> <span class="cn">NA</span>, <span class="at">labRow =</span> nombres_columnas, <span class="at">labCol =</span> nombres_columnas )</span>
+<span id="cb51-6"><a href="#cb51-6" tabindex="-1"></a>}</span></code></pre></div>
+<p>Un ejemplo:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Columna_A =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Azul&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Rojo&quot;</span>, <span class="st">&quot;Azul&quot;</span>, <span class="st">&quot;Verde&quot;</span>, <span class="st">&quot;Verde&quot;</span>)),</span>
+<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a><span class="at">Columna_B =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Medio&quot;</span>)),</span>
+<span id="cb52-3"><a href="#cb52-3" tabindex="-1"></a><span class="at">Columna_C =</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Medio&quot;</span>, <span class="st">&quot;Bajo&quot;</span>, <span class="st">&quot;Alto&quot;</span>, <span class="st">&quot;Medio&quot;</span>)))</span>
+<span id="cb52-4"><a href="#cb52-4" tabindex="-1"></a><span class="fu">plot_infomutua</span>(data)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAABYlBMVEUAAAAAAAgAAA4AABgAAC0AADoAAGYAKiIAOjoAOmYAOnEAOpAAZmYAZo8AZpAAZrYcAAAcAA4cABUcACAyAAAyAAgyACU4AAA4Khg4Sis4aTM6AAA6OgA6Ojo6OlE6OmY6ZmY6ZpA6ZrY6kLY6kNtGAAhGACVZAABZACVjAABjhTxmAABmADpmOgBmOjpmZmZmZpBmkJBmkLZmkNtmtttmtv9rABV9ABV9ABt9ACWLSg6LoDyQOgCQOjqQZjqQZmaQkLaQttuQtv+Q28iQ29uQ2/+waRiwoDOwujy2ZgC2Zjq2kDq2kFG2kGa2kJC2tra2ttu226y227a229u22/+2/9u2///UaQ7UujzbkC3bkDrbkGbbtmbbtpDbtrbb27bb29vb2//b/8jb/9vb///3hRj3uiv3ujP3ujz40HT75Jr/tlH/tmb/25D/27b/29v//4///6z//7b//8j//9v///8UaBI3AAAACXBIWXMAAA7DAAAOwwHHb6hkAAALQElEQVR4nO2d/WPbRhnHb2Ue6QJ4MBgDN7hJAxRCUhYaWCC0BMZAgRBYChtu0iSbYQGcFBr5/0f3It2ddLJ0d1Z8lr/fH1pbutePHt2d5OeekHFNvdognd/WTVxUfPhru9LiPULW7Zpyco+QTkkea6WVENsMbjrdJDt2pdkDGhCq+QSUZG4cEM3QHbq2sLSSGQGq1gRAU6ujjshhcuOSpcf0c2Kj68975O6zZMSQR2X9DJDhVJS07HqL8Iw90vkJO6okjJjxk66sgZdG+8T1xt9kcddPkqFk+7MU0FlScmf1WbEpVz2y/Bkdd3hjFECnSRbS3x9rnapsJau6l3zZHir9TVvY5WWt8MZGytEcIMOp5NB93s3jPTkOKAlVQLyGCYBGPXbk7iYvh48spLNjAkQTiQpFHctDZnvpZ6VTla3MqmYZJaDkW1II/SLa8mA8Uo/qrTKdSivJRLurJlQB8RrKAcljrAuj9HOxKVc9tUIJSDanO1Y6VdlKpequCmiHV7XDy2LDXKQe1VtlOkWrfjBkFy6xX1GbljA1/6wGZURj+aQ90iRrw/H1JgNETy7zb918U2jZncfjmFav1EGRLie30QEpdKqilfTYPqsyYZcZRHrVRAJlHNZHPW2Q1k9F3CgHpAhPJFQA8UKU0iKizj5sLqIfaDHr9F+WbiRumDygnXHhIojWpCVlVVa2Mp0Wrla2LxSDiF88pcOUAJS2QjmaB1Q8FfE+jbjVZvCUhAogXoMENCBq3+XkxT9kd1juLhSAWBn6RZCz3yC9fXjxla00GUQ2numA4ifKUb1VplPGqrWE5YAGRJ/CZMPzgDT7LQcku8nbMxmQ2koTIDYsLb330YYGiGHLjhaJ5k+ZqtYTlgIa6cOvyYJUfHlA7JyHBWmtLLMgWXZaVu6mVjMYT5mq1hOWAWLjrL78jPJjUHH1NxGQYQwqB6S1MkX76kerx8oYRFPLUZyVJcowzWLGU6aq9YQlgOhhdYEjrjubxTayWeyNZ3LorgGoOIuVA9JbOeCz4kF6w4llzTqfUnMWJI8WLKhwquzayIR8hbE8zAEayBFmXalHPTh5HWQCpIyr3XENC8q3krc0G3PVxqhl5dutrIMKp4zDn54wqg0oXf917mkrafW5bDIgSWh1WAUo18p0JS1WjXyhmBzrH7Nlxs3fCXnz05tE//tjcvQ7f/lP+p3qvxvk9d+YTyW1fPnm5vIfhHzh95eX//wBIT+8vPz8w28S8u7vkoNf/CT59nNC7nzrk4/5N5bozi8uP5aAvn25m+r97xLy2tcefp+Qt+nXn34jOf3Vh7tS73+dvPa93d2fvUXuPORfyTu7u+XPYpNmsUPZ/3H6LLamPYvJC3Pjp0tP7Xpq3IwACIAACIAACIAACIAACIAACIAACIAACIAACIAACIAACIAACICaBfTykDqWde7vl3Q83jP86r84gK4zrw3qLQVAeUCKd17x138A4nyoi0Zyo/VMDjQLDoj+OJ/dWLpjCABR6V5XJR7wCwxIeIVlGpA+30jz8oD6a61dqICS/4SHpPiU8OxyX3bqaR4ftBBQ0kWjbZykzi2PqwCJMX6NuXG1D9DIPOgo/qA7kwF9SThSdT6gnkatBGTYBUMdgujITd3JBJkyQMwHkPmnk9WLFgIaGAENUnd14as5CdB6SrTbykHaDCjK5rJkhOlOBMRHsOQ7zdFCQMYxSIIQHycAEge4B3ALAdF9ZIWdh7LfAs3Eab7dgPLTfLzX3x7aWFDbAVF/VnUQYmMOAJU+aoiFdeUgLe7MRQBUeFgV+8SWzdO8ABeRhQGUf92RbZoyLBQpl86+eMO2MICyPQXyyaLsUUMe/srijEFjbifpK9f0Xcdz08PqeHwgkv11oQCNx2dP6E7LTl95aS92YmivO8Z8Z0cnWwgsDKBpCYAACIAACIAACIAACIAACIAACIAACIAACIAACIAAaBaAfDv4L08BEAABEAABEAABEAABEAABEAABEAABEAABEAABEAABEAABEAABUBsBhRc/KChAIcYPCglQkPGDAgIUZvygcAAFGj8oHECBxg8KBlCo8YOCARRq/KBgAIUaPygkQEHGDwoGUKjxgwIHNPv4QcEACjV+UDCAQo0fFAygUOMHBQMo1PhB4QAKNH5QOIACjR8UDqBA4wcFBCjM+EEhAQoyflBQgEKMHxQYoGkJgAAIgAAIgAAIgAAIgAAIgAAIgAAIgAAIgAAIgADICZBnB//tKc/rcwNAAARAAARAAARAAARAAARAAARAAARAAARAAARAAARAAARAADSXgBoIj9MmQI2Ex2kRoGbC47QHUEPhcVoDqKnwOK0B1FR4nLYAaiw8TlsANRYepy2AGguP0yJAzYTHaQugxsLjtBvQFMLjtAVQY+Fx2gKosfA4bQHUWHictgBqLDxOawA1FR6nNYCaCo/TGkBNhcdpD6CGwuO0CFAz4XHaBKiR8DjtAjQtARAAARAAARAAARAAARAAARAAARAAARAAARAAARAAAVATgCCTAKhCAFQhAKoQAFUIgCoEQBUCoAq5AIpP+nW2gbRD9oCoq1GtfTIGxS+OjgsOqDY63ffK7iBbQKfM8cYO0Ms/PfoV7VfM90mumvdITtDJvdTxOWLbBG5TVoDYfiLqbFS2U9akmHsorfNdEMyDybB9a1IBe6l7IS+iZBNqQ7IAxI2HdLYvrGqIBJZ1+uH+oy1bA9SgxKVbLJtSXUCsZYn6x5YVUB/AB+fnf8juTOphadhLUSrhZZmKbuEqOtI3p3qAzraEGdhfvNSre5B5Uw7M+7lKlPDUb0kKeMe2Fe6qASjmW/U6a2clW/kmZk79kGVHjXspShUV7M0OsK8qAYkt+nRcLtvrOElZHpnZqhjp6J3JDrCvqgCxIXJpeyg+3zogQ2KXZrirDqDUlRaADIp/KVc+AGSUmOA7axeBjEGjW53na03zYqBecpjmfQEZdqBGYc1iXPHJPWWfg4UojePzRGfph3O71UIyZ+mpw1sHCaUPYqtWa+nsAUyTjSFG+h2lPJndiqweVk+3rJ/G/AFRi5FPx6c9cqsGZPu6Q4zYFoPs00cG/djGBPjmr/57R0dP+QWyvc29ZP/C7MzjhZmbrjZV67tr97LEV3PxyjWdImxfRU1Dzi/tfZdrlvnjF0eJbN+1TEHzAmhmmltAtwUYgCoEQBUCoAoBUIUAqEIAVCEAqhAAVQiAKgRAFQKgCgFQhQCoQgBUIWdA8YujP/v8uOCbP2xA556/u/jmHwcI6OUh/0Fia2Ul/1PereTPy9cC66ouoIHz71rTya9rChZYVzUBaX/Jg8fDt5Jv/ulbYF3VBMQ8Kc82Ox+cHzr9NO6bf8oWaKF6gLKAsTsGb4JbyD8FC3RVPUDij3cMmCeKOSR6o/n9LdBZtQHRqz5ijjkOTpS++b0t0F1WgK56Wlj8+ppCfj8LdFftMYg28NUG7ZlDB33z+1qgh2rOYgMRpJp208XGPfP7WqCH6q+D6NQRke4wjhxcvDzz+1qghyxW0kmr0tnWfgzwzO9rwe6q/Sz2vEdbxddrLk6mfvl9LdhdFk/z7AHo+slK39GHySu/rwU7a252PftasKvmBpC/BbtpjgDNRrUBxaeubrzTyT8r1QV0oj1O20+zvvlnJqcXZvYd9M0/Owu0eGH22G47+FTzz84Caz/Ne72E8c0/BQt0ldXrDmd5Pz55W6Cz5gOQtwW6q/YYZBlwY7r5Z+iWXxNQyV+/rS3P/OEDooPAA5+51TO/rwW7q+Yr16eP6DSytCJkux3KN7+3Bbur/jTvM8365ve3YGfNByBvC3TXfDzN+1ugswCoQvMBaIb6P74q/GG/jMoTAAAAAElFTkSuQmCC" /><!-- --></p>
+<p>Lo mismo que ocurre en el mapa de calor de las correlaciones, cuánto
+más intenso sea el color, mayor será la información mutua entre esas
+variables.</p>
+<p>##Otras funciones interesantes para la gestión de datos ###Eliminar
+filas duplicadas Esta función encuentra filas de datos duplicadas en el
+dataset y los elimina.</p>
+<p>Los duplicados pueden introducir errores y sesgos en el análisis. Si
+un mismo registro está repetido, puede hacer que ciertos valores o
+patrones parezcan más frecuentes de lo que realmente son, lo que afecta
+la precisión de los resultados. También pueden distorsionar métricas
+como la media, la desviación estándar y otras estadísticas, reduciendo
+la validez de los resultados.</p>
+<p>Por todo esto, esta función podría ser interesante para el
+preprocesamiento de datos.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a>remove_duplicates <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a>  <span class="co"># Encontrar filas duplicadas</span></span>
+<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a>  duplicated_rows <span class="ot">&lt;-</span> <span class="fu">duplicated</span>(data)</span>
+<span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a>  </span>
+<span id="cb53-5"><a href="#cb53-5" tabindex="-1"></a>  <span class="co"># Filtrar el data frame para conservar solo filas únicas</span></span>
+<span id="cb53-6"><a href="#cb53-6" tabindex="-1"></a>  data_unique <span class="ot">&lt;-</span> data[<span class="sc">!</span>duplicated_rows, ]</span>
+<span id="cb53-7"><a href="#cb53-7" tabindex="-1"></a>  </span>
+<span id="cb53-8"><a href="#cb53-8" tabindex="-1"></a>  <span class="co"># Devolver el data frame sin duplicados</span></span>
+<span id="cb53-9"><a href="#cb53-9" tabindex="-1"></a>  <span class="fu">return</span>(data_unique)</span>
+<span id="cb53-10"><a href="#cb53-10" tabindex="-1"></a>}</span></code></pre></div>
+<p>Un ejemplo:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a>data_with_duplicates <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a><span class="at">ID =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>),</span>
+<span id="cb54-3"><a href="#cb54-3" tabindex="-1"></a><span class="at">Value =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;E&quot;</span>))</span>
+<span id="cb54-4"><a href="#cb54-4" tabindex="-1"></a><span class="fu">remove_duplicates</span>(data_with_duplicates)</span>
+<span id="cb54-5"><a href="#cb54-5" tabindex="-1"></a><span class="co">#&gt;   ID Value</span></span>
+<span id="cb54-6"><a href="#cb54-6" tabindex="-1"></a><span class="co">#&gt; 1  1     A</span></span>
+<span id="cb54-7"><a href="#cb54-7" tabindex="-1"></a><span class="co">#&gt; 2  2     B</span></span>
+<span id="cb54-8"><a href="#cb54-8" tabindex="-1"></a><span class="co">#&gt; 4  3     C</span></span>
+<span id="cb54-9"><a href="#cb54-9" tabindex="-1"></a><span class="co">#&gt; 5  4     D</span></span>
+<span id="cb54-10"><a href="#cb54-10" tabindex="-1"></a><span class="co">#&gt; 7  5     E</span></span></code></pre></div>
+<p>Por lo tanto, toma un data frame de cualquier clase y devuelve otro
+data frame con las filas duplicadas eliminadas.</p>
+<p>###Dividir el data set en entrenamiento y prueba Esta función como el
+nombre lo indica, divide un dataset en dos: uno para entrenamiento y
+otro para prueba.</p>
+<p>La idea es crear un conjunto que el modelo usará para aprender
+(entrenamiento) y otro para evaluarlo (prueba), asegurando que el modelo
+sea capaz de generalizar bien a datos nuevos. El objetivo es que el
+modelo sea preciso no solo en los datos que conoce (entrenamiento) sino
+también en datos que no ha visto (prueba). Al entrenarlo en un conjunto
+y evaluarlo en otro, puedes medir qué tan bien generaliza a datos
+desconocidos, lo cual es crucial para que el modelo sea útil en el mundo
+real.</p>
+<p>Cuando el modelo memoriza demasiado los datos de entrenamiento, se
+adapta a ellos de forma específica y no generaliza bien, lo que se llama
+sobreajuste (overfitting). La evaluación en el conjunto de prueba
+permite identificar si el modelo está sobreajustado.</p>
+<p>La función que he creado es la siguiente:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a>split_data <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">train_ratio =</span> <span class="fl">0.7</span>, <span class="at">seed =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb55-2"><a href="#cb55-2" tabindex="-1"></a>  <span class="co"># Si se especifica, establecer la semilla para reproducibilidad</span></span>
+<span id="cb55-3"><a href="#cb55-3" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(seed)) {</span>
+<span id="cb55-4"><a href="#cb55-4" tabindex="-1"></a>    <span class="fu">set.seed</span>(seed)</span>
+<span id="cb55-5"><a href="#cb55-5" tabindex="-1"></a>  }</span>
+<span id="cb55-6"><a href="#cb55-6" tabindex="-1"></a>  </span>
+<span id="cb55-7"><a href="#cb55-7" tabindex="-1"></a>  <span class="co"># Número total de observaciones</span></span>
+<span id="cb55-8"><a href="#cb55-8" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data)</span>
+<span id="cb55-9"><a href="#cb55-9" tabindex="-1"></a>  </span>
+<span id="cb55-10"><a href="#cb55-10" tabindex="-1"></a>  <span class="co"># Determinar el número de muestras para el conjunto de entrenamiento</span></span>
+<span id="cb55-11"><a href="#cb55-11" tabindex="-1"></a>  train_size <span class="ot">&lt;-</span> <span class="fu">floor</span>(train_ratio <span class="sc">*</span> n)</span>
+<span id="cb55-12"><a href="#cb55-12" tabindex="-1"></a>  </span>
+<span id="cb55-13"><a href="#cb55-13" tabindex="-1"></a>  <span class="co"># Obtener índices aleatorios para el conjunto de entrenamiento</span></span>
+<span id="cb55-14"><a href="#cb55-14" tabindex="-1"></a>  train_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq_len</span>(n), <span class="at">size =</span> train_size)</span>
+<span id="cb55-15"><a href="#cb55-15" tabindex="-1"></a>  </span>
+<span id="cb55-16"><a href="#cb55-16" tabindex="-1"></a>  <span class="co"># Dividir el data frame</span></span>
+<span id="cb55-17"><a href="#cb55-17" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> data[train_indices, ]</span>
+<span id="cb55-18"><a href="#cb55-18" tabindex="-1"></a>  test_data <span class="ot">&lt;-</span> data[<span class="sc">-</span>train_indices, ]</span>
+<span id="cb55-19"><a href="#cb55-19" tabindex="-1"></a>  </span>
+<span id="cb55-20"><a href="#cb55-20" tabindex="-1"></a>  <span class="co"># Devolver los conjuntos como una lista</span></span>
+<span id="cb55-21"><a href="#cb55-21" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">train =</span> train_data, <span class="at">test =</span> test_data))</span>
+<span id="cb55-22"><a href="#cb55-22" tabindex="-1"></a>}</span></code></pre></div>
+<p>Y un ejemplo:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb56-2"><a href="#cb56-2" tabindex="-1"></a><span class="at">ID =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb56-3"><a href="#cb56-3" tabindex="-1"></a><span class="at">Value =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">10</span>))</span>
+<span id="cb56-4"><a href="#cb56-4" tabindex="-1"></a><span class="fu">split_data</span>(data, <span class="at">train_ratio =</span> <span class="fl">0.7</span>, <span class="at">seed =</span> <span class="dv">123</span>)</span>
+<span id="cb56-5"><a href="#cb56-5" tabindex="-1"></a><span class="co">#&gt; $train</span></span>
+<span id="cb56-6"><a href="#cb56-6" tabindex="-1"></a><span class="co">#&gt;    ID Value</span></span>
+<span id="cb56-7"><a href="#cb56-7" tabindex="-1"></a><span class="co">#&gt; 3   3     8</span></span>
+<span id="cb56-8"><a href="#cb56-8" tabindex="-1"></a><span class="co">#&gt; 10 10    10</span></span>
+<span id="cb56-9"><a href="#cb56-9" tabindex="-1"></a><span class="co">#&gt; 2   2     3</span></span>
+<span id="cb56-10"><a href="#cb56-10" tabindex="-1"></a><span class="co">#&gt; 8   8     7</span></span>
+<span id="cb56-11"><a href="#cb56-11" tabindex="-1"></a><span class="co">#&gt; 6   6     9</span></span>
+<span id="cb56-12"><a href="#cb56-12" tabindex="-1"></a><span class="co">#&gt; 9   9     4</span></span>
+<span id="cb56-13"><a href="#cb56-13" tabindex="-1"></a><span class="co">#&gt; 1   1     5</span></span>
+<span id="cb56-14"><a href="#cb56-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb56-15"><a href="#cb56-15" tabindex="-1"></a><span class="co">#&gt; $test</span></span>
+<span id="cb56-16"><a href="#cb56-16" tabindex="-1"></a><span class="co">#&gt;   ID Value</span></span>
+<span id="cb56-17"><a href="#cb56-17" tabindex="-1"></a><span class="co">#&gt; 4  4     2</span></span>
+<span id="cb56-18"><a href="#cb56-18" tabindex="-1"></a><span class="co">#&gt; 5  5     6</span></span>
+<span id="cb56-19"><a href="#cb56-19" tabindex="-1"></a><span class="co">#&gt; 7  7     1</span></span></code></pre></div>
+<p>En la función que he creado, si no se especifica el porcentaje de los
+datos que queremos tener en el set de entrenamiento el valor por defecto
+será 0.7. La función toma un data frame de clase numérico, un valor
+numérico entre 0 y 1 (que será el porcentaje de datos en el set de
+entrenamiento) y un valor numérico para la reproducibilidad. La función
+obtiene ese procentaje de los datos aleatoriamente y los guarda en un
+set (el de entrenamiento), por lo cual el resto los guarda en otro (el
+de prueba). La función devuelve una lista con dos data frames
+numéricos.</p>
+<p>#Conclusiones Con el presente trabajo he podido implementar distintas
+funciones que son fundamentales para el análisis y gestión de datos y a
+su vez, he conseguido un buen conocimiento del lenguaje de programación
+R.</p>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
